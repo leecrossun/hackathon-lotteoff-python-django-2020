@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'shop',
     'cart',
     'chatApp',
+    'driveApp',
 
     'allauth',
     'allauth.account',

@@ -11,6 +11,7 @@ urlpatterns = [
     path('shop/', include('shop.urls', namespace='shop')),
     path('cart/', include('cart.urls')),
     path('', include('chatApp.urls')),
+    path('', include('driveApp.urls')),
     path('accounts', include('allauth.urls')),
 ] 
 

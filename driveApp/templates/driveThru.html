@@ -1,0 +1,43 @@
+{%extends 'tem.html'%}
+
+{%block contents%}
+
+<h1>드라이브 스루 신청결과<h1>
+        <div>
+            {% for post in posts %}
+            <div style="border: 1px solid black;">
+                <p>{{post.shop}}</p>
+                <p>{{post.items}}</p>
+                <p>{{post.pick_date}}</p>
+                <p>{{post.pub_date}}</p>
+                <!-- 픽업 준비 상황 (신청완료 = 0 (디폴트) / 상품준비중 = 1 / 준비완료, 픽업대기 = 2 / 픽업완료 = 3) -->
+                {%if post.state == 0%}
+                <p>신청완료(대기중)</p>
+                {%elif post.state == 1%}
+                <p>상품 준비중</p>
+                {%elif post.state == 2%}
+                <p>픽업대기</p>
+                {% else %}
+                <p>픽업완료</p>
+                {% endif %}
+                <a class="btn" href = "{% url 'delete' post.id %}"> 삭제 </a><br><br>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!--페이지네이션-->
+        <div class="pagination">
+            {%if posts.has_previous%}
+            <a class="btn-1" href="?page=1">First</a> &nbsp;
+            <a class="btn-1" href="?page={{posts.previous_page_number}}">Previous</a> &nbsp;
+            {%endif%}
+            <span>{{posts.number}}</span>
+            <span>of</span>
+            <span>{{posts.paginator.num_pages}}</span> &nbsp;
+
+            {%if posts.has_next%}
+            <a class="btn-1" href="?page={{posts.next_page_number}}">Next</a>&nbsp;
+            <a class="btn-1" href="?page={{posts.paginator.num_pages}}">Last</a>
+            {%endif%}
+        </div>
+        {%endblock%}
