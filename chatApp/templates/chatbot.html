@@ -1,0 +1,67 @@
+{%extends 'tem.html'%}
+{%block contents%}
+
+<br><br><br><br><br><br>
+
+{% if user.is_authenticated and not user.username == "admin" %}
+    <a href="{% url 'create_room' %}">새로 만들기</a>
+{% endif %}
+
+<br><br><br>
+<a href="{% url 'chatbot_unread' %}">안 읽은 채팅방</a>
+<br>
+<a href="{% url 'chatbot' %}">전체 채팅방</a>
+<br><br><br>
+<!-- {% if user.is_authenticated %}
+    {% if user.username == "admin" %}
+        {% for room in all_room %}
+            <div>
+                <p>{{room.user}}</p>
+                <p>{{room.last_message}}</p>
+                {% if not room.admin_read %}
+                    <p>안읽음</p>
+                {% endif %}
+                <a href="{% url 'chatroom' room.id %}">들어가기</a>
+            </div>
+            <br><br>
+        {% endfor %}
+    {% else %}
+        {% for room in my_room %}
+            <div>
+                <p>{{room.last_message}}</p>
+                {% if not room.user_read %}
+                    <p>안읽음</p>
+                {% endif %}
+                <a href="{% url 'chatroom' room.id %}">들어가기</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endif %} -->
+
+
+{% if user.is_authenticated %}
+        {% for room in all_room %}
+            <div>
+                {% if user.username == "admin" %}
+                    <p>username: {{room.user}}</p>
+                {% endif %}
+
+                <p>{{room.last_message}}</p>
+
+                {% if user.username == "admin"%}
+                    {% if not room.admin_read %}
+                        <p>안읽음</p>
+                    {% endif %}
+                {% else %}    
+                    {% if not room.user_read %}
+                        <p>안읽음</p>
+                    {% endif %}
+                {% endif %}
+
+                <a href="{% url 'chatroom' room.id %}">들어가기</a>
+            </div>
+            <br><br>
+        {% endfor %}
+{% endif %}
+
+{%endblock%}

@@ -1,0 +1,84 @@
+{%extends 'tem.html'%}
+{%block contents%}
+
+{% for message in my_room.message_set.all %}
+    <div>
+        {{message.sender}} : {{message.body}} ({{message.time}})
+    </div>
+{% endfor %}
+<form method="POST" action="{% url 'create_message' my_room.id %}">
+    {% csrf_token %}
+    {{message_form}}
+    <input type="submit" value="확인">
+</form>
+<br>
+
+<p id="refresh">새로고침</p>
+<div id="here">여기<br></div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- <script type="text/javascript">
+  $("#refresh").click(function(){
+    var pk = $(this).attr('name')
+    $.ajax({ 
+      type: "POST", 
+      url: "{% url 'chat_refresh' my_room.id %}", 
+      data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
+      dataType: "json", 
+      success: function(response){ 
+        //document.getElementById('here').innerHTML = "성공";
+        for (i in response) {
+            //지금은 계속 +=로 추가하는데 나중에는 한 문자열에 넣고 한 번에 
+            var message = JSON.parse(response[i])
+            for (var key in message) {
+                document.getElementById('here').innerHTML += message[key];
+                if (key == "sender") {
+                  document.getElementById('here').innerHTML += ": ";
+                } else {
+                  document.getElementById('here').innerHTML += "<br>";
+                }
+            }
+        }
+      },
+      error: function(request, status, error){ // 통신 실패시 - 로그인 페이지 리다이렉트
+        document.getElementById('here').innerHTML = "오류";
+      },
+    });
+  })
+</script> -->
+
+<script>
+  setInterval("refresh()", 1000);
+
+  function refresh() {
+      $.ajax({ 
+        type: "POST", 
+        url: "{% url 'chat_refresh' my_room.id %}", 
+        data: {'pk': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
+        dataType: "json", 
+        success: function(response){ 
+          document.getElementById('here').innerHTML = "성공<br>";
+          for (i in response) {
+              //지금은 계속 +=로 추가하는데 나중에는 한 문자열에 넣고 한 번에 
+              var message = JSON.parse(response[i])
+              for (var key in message) {
+                  document.getElementById('here').innerHTML += message[key];
+                  if (key == "sender") {
+                    document.getElementById('here').innerHTML += ": ";
+                  } else {
+                    document.getElementById('here').innerHTML += "<br>";
+                  }
+              }
+          }
+        }
+      });
+  }
+
+</script>
+
+
+{% if user.is_authenticated or user.username == "admin" %}
+    <a href="{% url 'delete_room' my_room.id %}">채팅방 삭제</a>
+{% endif %}
+
+{%endblock%}

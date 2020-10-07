@@ -10,6 +10,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('shop/', include('shop.urls', namespace='shop')),
     path('cart/', include('cart.urls')),
+    path('', include('chatApp.urls')),
     path('accounts', include('allauth.urls')),
 ] 
 
