@@ -2,6 +2,50 @@
 {%load static%}
 {%block contents%}
 
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+<style>
+    .my_customer_table {
+        min-width:400px;
+        font-size:14px;
+    }
+
+    .my_custom_thread {
+        font-weight:normal;
+        text-transform:uppercase;
+        letter-spacing:.2em;
+        background-color:#f8f9fa !important;
+    }
+
+    .custom_image {
+        width:100px;
+        height:100px;
+    }
+
+    .custom_a {
+        text-decoration:none;
+    }
+
+    .custom_icon {
+        text-decoration:none;
+        color:#868e96 !important;
+    }
+
+    .my_custom_button {
+        margin-top: 5px;
+    }
+
+
+</style>
+
+</head>
+
+
+<body>
 {%if not cart_items%}
     <div>
         <div class="text-center">
@@ -25,28 +69,28 @@
                     {%for cart_item in cart_items%}
                         <tr>
                             <td>
-                                <a href="{{cart_item.product.get_absolute_url}}"><img src="{{cart_item.product.image.url}}" alt="" class="float-left rounded custom-image"></a>
+                                <a href="{{cart_item.product.get_absolute_url}}"><img src="{{cart_item.product.image.url}}" alt="" class="float-left rounded custom_image"></a>
                             </td>
                             <td class="text-left">
                                 {{cart_item.product.name}}<br>
                                 SKU : {{cart_item.product.id}}<br>
-                                개당 가격 : A${{cart_item.product.price}}<br>
-                                총금액 : {{cart_item.quantity}} x A${{cart_item.product.price}}
+                                개당 가격 : {{cart_item.product.price}}원<br>
+                                총금액 : {{cart_item.quantity}} x {{cart_item.product.price}}원
                             </td>
                             <td>
-                                A${{cart_item.sub_total}}
+                                {{cart_item.sub_total}}원
                             </td>
                             {%if cart_item.quantity <= cart_item.product.stock%}
                                 <td>
                                     <a href="{%url 'cart:add_cart' cart_item.product.id%}" class="custom_a">
-                                        <i class="fas fa-puls-circle custom_icon"></i></a>&nbsp;
-                                    <a href="" class="custom_a"><i class="fas fa-minus-circle custom_icon"></i></a>&nbsp;
-                                    <a href="" class="custom_a"><i class="fas fa-trash-alt custom_icon"></i></a>
+                                        <i class="fas fa-plus-circle custom_icon"></i></a>&nbsp;
+                                    <a href="{%url 'cart:cart_remove' cart_item.product.id%}" class="custom_a"><i class="fas fa-minus-circle custom_icon"></i></a>&nbsp;
+                                    <a href="{%url 'cart:full_remove' cart_item.product.id%}" class="custom_a"><i class="fas fa-trash-alt custom_icon"></i></a>
                                 </td>
                             {%else%}
                                 <td>
-                                    &nbsp;<a href="" class="custom_a"><i class="fas fa-minus-circle custom_icon"></i></a>&nbsp;
-                                    <a href="" class="custom_a"><i class="fas fa-trash-alt custom_icon"></i></a>
+                                    &nbsp;<a href="{%url 'cart:cart_remove' cart_item.product.id%}" class="custom_a"><i class="fas fa-minus-circle custom_icon"></i></a>&nbsp;
+                                    <a href="{%url 'cart:full_remove' cart_item.product.id%}" class="custom_a"><i class="fas fa-trash-alt custom_icon"></i></a>
                                 </td>
                                 <td></td>
                             {%endif%}
@@ -68,7 +112,7 @@
                     </tr>
                     <tr>
                         <td class="text-left">
-                            총금액 : <strong>A${{total}}</strong>
+                            총금액 : <strong>{{total}}원</strong>
                         </td>
                     </tr>
                 </tbody>
@@ -80,5 +124,6 @@
     </div>
     <br>
 {%endif%}
-
+</body>
+</html>
 {%endblock%}

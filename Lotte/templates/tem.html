@@ -149,7 +149,11 @@
             <li class="navBtn-r" onclick="location.href='/accounts/signup'">회원가입</li>
             {% if user.is_authenticated %}
             <li class="navBtn-r" onclick="location.href='/accounts/logout'">로그아웃</li>
-            <li class="navBtn-r" onclick="location.href='/cart/'">장바구니</li>
+            {%if item_count > 0 %}
+                <li class="navBtn-r" onclick="location.href='/cart/'">장바구니({{item_count}})</li>
+            {%else%}
+                <li class="navBtn-r" onclick="location.href='/cart/'">장바구니</li>
+            {%endif%}
             <li class="navBtn-r">{{user.username}} 님이 로그인 중</li>
             {% else %}
             <li class="navBtn-r"><a href="{% provider_login_url 'google' %}">소셜로그인</a></li>
