@@ -1,0 +1,43 @@
+{%extends 'tem.html'%}
+{%load static%}
+{%block contents%}
+
+{%if category%}
+    <div>
+        <div>
+            <p><a href="{%url 'shop:allProdCat'%}">상품컬렉션</a> | {{category.name}}</p>
+        </div>
+    </div>
+{%endif%}
+
+<div>
+{%if category%}
+    <div>
+        <img src="{{category.image.url}}" alt="{{category.name}}">
+    </div><br>
+    <div>
+        {{category.name}}
+        {{category.description}}
+    </div>
+{%else%}
+    <div>
+        <h1>상품컬렉션</h1>
+        <p>상품컬렉션입니다.</p>
+    </div>
+{%endif%}
+</div>
+<div>
+    <div>
+        {%for product in products%}
+        <div>
+            <a href="{{product.get_url}}"><img src="{{product.image.url}}" alt="{{product.name}}"></a>
+            <div>
+                <h4>{{product.name}}</h4>
+                <p>A${{product.price}}</p>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
+{%endblock%}

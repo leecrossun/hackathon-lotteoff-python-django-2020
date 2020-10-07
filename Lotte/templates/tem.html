@@ -1,3 +1,4 @@
+
 {% load socialaccount %}
 {% providers_media_js %}
 <!DOCTYPE html>
@@ -136,6 +137,12 @@
                 </label>
             </li>
             <li class="navBtn-s" onclick="location.href='/'">HOME</li>
+            
+            <li><a href="{%url 'shop:allProdCat'%}">모든상품</a></li>
+            {%for cat in links%}
+                <li><a href="{{cat.get_url}}">{{cat.name}}</a></li>
+            {%endfor%}
+            
             <li class="navBtn-s" onclick="location.href='/newProduct/'">신제품</li>
             <li class="navBtn-s" onclick="location.href='/select/'">드라이브 스루 신청</li>
             <li class="navBtn-s" onclick="location.href='/driveThru/'">드라이브 스루 확인</li>
