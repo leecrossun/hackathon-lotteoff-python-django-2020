@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'shop',
+    'cart',
 
     'allauth',
     'allauth.account',
@@ -51,7 +52,10 @@ ROOT_URLCONF = 'Lotte.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['Lotte/templates',],
+        'DIRS': [
+            'Lotte/templates',
+            'cart/templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

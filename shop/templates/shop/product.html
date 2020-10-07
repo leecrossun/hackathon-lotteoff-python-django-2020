@@ -22,7 +22,7 @@
                     {%if product.stock <= 0 %}
                         <p>재고없음</p>
                     {%else%}
-                        <a href="">장바구니 담기</a>
+                        <a href="{%url 'cart:add_cart' product.id%}">장바구니 담기</a>
                     {%endif%}
                 </div>
             </div>
