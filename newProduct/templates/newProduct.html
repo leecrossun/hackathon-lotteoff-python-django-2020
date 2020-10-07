@@ -1,0 +1,13 @@
+{%extends 'tem.html'%}
+
+{%block contents%}
+<h1>롯데푸드의 신제품 시식단이 되어주세요!</h1>
+<p>댓글을 통해 신청할 수 있습니다.</p><br>
+<hr/><br>
+{%for new in news%}
+<div class="news" onclick="location.href='/newProduct/{{new.id}}'">
+    <span>{{new.title}}</span>
+    <img class="new_thum" src="{{new.image_thumnail.url}}" alt="썸네일">
+</div>
+{%endfor%}
+{%endblock%}

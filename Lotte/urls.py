@@ -12,7 +12,8 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
     path('', include('chatApp.urls')),
     path('', include('driveApp.urls')),
-    path('accounts', include('allauth.urls')),
+    path('', include('newProduct.urls')),
+    path('accounts/', include('allauth.urls')),
 ] 
 
 if settings.DEBUG:
