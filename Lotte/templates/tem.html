@@ -1,0 +1,166 @@
+{% load socialaccount %}
+{% providers_media_js %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>LOTTE OFF</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav {
+            width: 30000px;
+            height: 80px;
+            display: table-cell;
+            vertical-align: middle;
+            background-color: #ED0000;
+        }
+
+        .navBtn-s,
+        .navBtn-l {
+            display: inline;
+            margin-right: 20px;
+            color: white;
+        }
+
+        .navBtn-s:hover,
+        .navBtn-r:hover {
+            color: black;
+            cursor: pointer;
+        }
+
+        .navBtn-r {
+            float: right;
+            display: inline;
+            color: white;
+            margin-right: 20px;
+        }
+
+        .logo {
+            margin-left: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white
+        }
+
+        /* 토글 */
+        /* The switch - the box around the slider */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            vertical-align: middle;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            display: none;
+        }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        p {
+            margin: 0px;
+            display: inline-block;
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <span class="logo">LOTTE OFF</span>
+        <ul class="navBtn-l">
+            <li class="navBtn-s">
+                <!-- 토글 -->
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </li>
+            <li class="navBtn-s" onclick="location.href='/'">HOME</li>
+            <li class="navBtn-s" onclick="location.href='/newProduct/'">신제품</li>
+            <li class="navBtn-s" onclick="location.href='/select/'">드라이브 스루 신청</li>
+            <li class="navBtn-s" onclick="location.href='/driveThru/'">드라이브 스루 확인</li>
+            <li class="navBtn-r" onclick="location.href='/accounts/signup'">회원가입</li>
+            {% if user.is_authenticated %}
+            <li class="navBtn-r" onclick="location.href='/accounts/logout'">로그아웃</li>
+            <li class="navBtn-r" onclick="location.href='/cart/'">장바구니</li>
+            <li class="navBtn-r">{{user.username}} 님이 로그인 중</li>
+            {% else %}
+            <li class="navBtn-r"><a href="{% provider_login_url 'google' %}">소셜로그인</a></li>
+            {% endif %}
+            <li class="navBtn-r"><a href="#">고객센터</a></li>
+        </ul>
+
+    </div>
+
+
+    {%block contents%}
+    {%endblock%}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js">
+        var check = $("input[type='checkbox']");
+        check.click(function () {
+            $("p").toggle();
+        });
+    </script>
+</body>
+
+</html>
