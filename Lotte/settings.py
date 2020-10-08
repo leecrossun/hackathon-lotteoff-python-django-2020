@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'chatApp',
     'driveApp',
     'newProduct',
+    'selectApp',
 
     'allauth',
     'allauth.account',

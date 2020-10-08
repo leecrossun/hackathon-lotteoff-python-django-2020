@@ -1,0 +1,25 @@
+{%extends 'tem.html'%}
+
+{%block contents%}
+
+<div align="center">
+    <h1>상품 상세보기</h1>
+
+    <h2>{{store.storeName}}</h2>
+    <p>{{store.name}}</p>
+    <img src="{{store.image.url}}" width="100px" height="100px" alt="상품 사진">
+    <p>가격: {{store.price}}원</p>
+
+    {% if store.available == True %}
+    <p>품절됨</p>
+    {% else %}
+    <p>재고 있음</p>
+    {% endif %}
+
+    <p>상품 상세정보: {{store.description}}</p>
+    <a href="{%url 'cart:add_cart' store.id%}">
+        <button>장바구니 담기</button>
+    </a>
+</div>
+
+{%endblock%}

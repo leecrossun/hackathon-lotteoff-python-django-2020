@@ -19,7 +19,16 @@ class Category(models.Model):
         return '{}'.format(self.name)
 
 
+class Region(models.Model):
+    region = models.CharField(max_length=20)
+    storeName = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.storeName
+
+
 class Product(models.Model):
+    storeName = models.CharField(max_length=20, default='')
     name = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(max_length=250, unique=True)
     descriptions = models.TextField(blank=True)

@@ -1,0 +1,135 @@
+{%extends 'tem.html'%}
+
+{%block contents%}
+
+<script>
+    var r1;
+    var r2
+
+    function f1() {
+        var province = ["서울특별시", "경기도", "경상남도", "경상북도"];
+        var c1 = ["강북구", "노원구"];
+        var c2 = ["남양주시", "평택시"];
+        var c3 = ["창원시 성산구", "창원시 의창구"];
+        var c4 = ["구미시", "포항시"];
+        
+        var selected = document.getElementById("s1");
+        var option = selected.options[selected.selectedIndex].text;
+        var city = document.getElementById("s2");
+        city.options.length = 0;
+
+        var addOption = document.createElement("option");
+        addOption.text = "시/구 선택";
+        city.add(addOption);
+
+        if (option == "서울특별시") {
+            r1 = "서울특별시";
+
+            for (var i = 0; i < c1.length; i++) {
+                var addOption = document.createElement("option");
+                addOption.text = c1[i];
+                addOption.value = i + 1;
+                city.add(addOption);
+            }
+        } else if (option == "경기도") {
+            r1 = "경기도";
+
+            for (var i = 0; i < c2.length; i++) {
+                var addOption = document.createElement("option");
+                addOption.text = c2[i];
+                addOption.value = i + 1;
+                city.add(addOption);
+            }
+        } else if (option == "경상남도") {
+            r1 = "경상남도";
+
+            for (var i = 0; i < c3.length; i++) {
+                var addOption = document.createElement("option");
+                addOption.text = c3[i];
+                addOption.value = i + 1;
+                city.add(addOption);
+            }
+        } else if (option == "경상북도") {
+            r1 = "경상북도";
+
+            for (var i = 0; i < c4.length; i++) {
+                var addOption = document.createElement("option");
+                addOption.text = c4[i];
+                addOption.value = i + 1;
+                city.add(addOption);
+            }
+        }
+    }
+
+    function f2() {
+        var city = document.getElementById("s2");
+        r2 = city.options[city.selectedIndex].text;
+
+        var a1 = document.getElementById("region");
+
+        switch (r1) {
+            case "서울특별시":
+            if (r2 == "노원구") {
+                a1.href = "{% url 'regionFilter' '서울특별시 노원구' %}";
+            } else if (r2 == "강북구") {
+                a1.href = "{% url 'regionFilter' '서울특별시 강북구' %}";
+            }
+            break;
+
+            case "경기도":
+            if (r2 == "남양주시") {
+                a1.href = "{% url 'regionFilter' '경기도 남양주시' %}";
+            } else if (r2 == "평택시") {
+                a1.href = "{% url 'regionFilter' '경기도 평택시' %}";
+            }
+
+            break;
+
+            case "경상남도":
+            if (r2 == "창원시 성산구") {
+                a1.href = "{% url 'regionFilter' '경상남도 창원시 성산구' %}";
+            } else if (r2 == "창원시 의창구") {
+                a1.href = "{% url 'regionFilter' '경상남도 창원시 의창구' %}";
+            }
+
+            break;
+
+            case "경상북도":
+            if (r2 == "포항시") {
+                a1.href = "{% url 'regionFilter' '경상북도 포항시' %}";
+            } else if (r2 == "구미시") {
+                a1.href = "{% url 'regionFilter' '경상북도 구미시' %}";
+            }
+
+            break;
+        }
+    }
+</script>
+
+<div align="center">
+    <h1>지점 고르기</h1>
+
+    <select name="s1" id="s1" onchange="f1()">
+        <option value="">시/도 선택</option>
+        <option value="1">서울특별시</option>
+        <option value="2">경기도</option>
+        <option value="3">경상남도</option>
+        <option value="4">경상북도</option>
+    </select>
+    
+    <select name="s2" id="s2" onchange="f2()">
+        <option value="">시/구 선택</option>
+    </select>
+    
+    <a id="region">
+        <button>확인</button>
+    </a>
+
+    <br><br>
+    
+    {% for r in regionPost %}
+    <a id="city" href="{% url 'storeFilter' r.storeName %}">{{r.storeName}}</a>
+    {% endfor %}
+</div>
+
+{%endblock%}

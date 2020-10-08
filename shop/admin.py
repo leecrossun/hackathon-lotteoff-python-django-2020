@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product
+from .models import Category, Product, Region
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
@@ -15,3 +15,5 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 admin.site.register(Product, ProductAdmin)
+
+admin.site.register(Region)

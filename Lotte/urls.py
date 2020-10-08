@@ -13,6 +13,7 @@ urlpatterns = [
     path('', include('chatApp.urls')),
     path('', include('driveApp.urls')),
     path('', include('newProduct.urls')),
+    path('', include('selectApp.urls')),
     path('accounts/', include('allauth.urls')),
 ] 
 
