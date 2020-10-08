@@ -2,97 +2,114 @@
 {%block contents%}
 
 <style>
-  .align-center {
-    margin: 0px auto;
-  }
-  .wrap-btn {
-    text-align: center;
-    padding: 30px;
-  }
-  .refresh, .delete-room {
-    border: 1px solid #ED0000;
-    color: black;
-    padding: 8px;
-    border-radius: 15px;
-    margin: 0px 3%;
-    font-size: 9pt;
-  }
-  .delete-room {
-    text-decoration: none;
-  }
-  .chatroom {
-    width: 40%;
-    background-color: #F3F3F3;
-    padding: 5px;
-    border-radius: 15px;
-    margin-bottom: 50px;
-  }
-  .message-right {
-    text-align: right;
-  }
-  .sender {
-    margin: 7px 10px 5px 10px;
-  }
-  .body {
-    display: inline-block;
-    position: relative;
-    max-width: 70%;
-    padding: 10px;
-    padding-top: 8px;
-    background: #DDDDDD;
-    border-radius: 15px;
-    word-wrap: break-word;
-    margin: 0px 20px;
-  }
-  .body-left:after {
-    border-top:15px solid  #DDDDDD;
-    border-left: 15px solid transparent;
-    border-right: 0px solid transparent;
-    border-bottom: 0px solid transparent;
-    content: "";
-    position: absolute;
-    top: 10px;
-    left: -15px;
-  }
-  .body-right:after {
-    border-top:15px solid  #DDDDDD;
-    border-left: 0px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 0px solid transparent;
-    content: "";
-    position: absolute;
-    top :10px;
-    right: -15px;
-  }
-  .enter {
-    width: 96%;
-    margin: 10px;
-    margin-top: 30px;
-  }
-  .enter-message {
-    padding: 10px;
-    border-radius: 15px;
-    border: 1px solid #ED0000;
-    width: calc(100% - 55px);
-  }
-  textarea:focus, input:not(#submit):focus, .uneditable-input:focus {
-    border-color: #ED0000;
-    box-shadow: 0 1px 1px #ED0000 inset, 0 0 8px #ED0000;
-    outline: 0 none;
-  } 
-  .btn-submit {
-    background-color: #ED0000;
-    color: white;
-    padding: 10px;
-    border-radius: 15px;
-    border: 0px;
-    width: 50px;
-  }
-  @media (orientation: portrait) {
-	  .chatroom {
-      width: 95%;
+    .align-center {
+      margin: 0px auto;
     }
-  }
+    .wrap-btn {
+      text-align: center;
+      padding: 30px;
+    }
+    .refresh, .delete-room {
+      border: 1px solid #ED0000;
+      color: black;
+      padding: 10px;
+      border-radius: 15px;
+      margin: 0px 3%;
+      font-size: 9pt;
+    }
+    .delete-room {
+      text-decoration: none;
+    }
+    .btn-effect:hover {
+        text-decoration: none;
+        background-color: #ED0000;
+        color: white;
+        transition-property: background-color, color;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-in-out;
+    }
+    .btn-effect2:hover {
+        text-decoration: none;
+        background-color: white;
+        color: #ED0000;
+        transition-property: background-color, color;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-in-out;
+    }
+    .chatroom {
+      width: 40%;
+      background-color: #F3F3F3;
+      padding: 5px;
+      border-radius: 15px;
+      margin-bottom: 50px;
+    }
+    .message-right {
+      text-align: right;
+    }
+    .sender {
+      margin: 7px 10px 5px 10px;
+    }
+    .body {
+      display: inline-block;
+      position: relative;
+      max-width: 70%;
+      padding: 10px;
+      padding-top: 8px;
+      background: #DDDDDD;
+      border-radius: 15px;
+      word-wrap: break-word;
+      margin: 0px 20px;
+    }
+    .body-left:after {
+      border-top:15px solid  #DDDDDD;
+      border-left: 15px solid transparent;
+      border-right: 0px solid transparent;
+      border-bottom: 0px solid transparent;
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: -15px;
+    }
+    .body-right:after {
+      border-top:15px solid  #DDDDDD;
+      border-left: 0px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 0px solid transparent;
+      content: "";
+      position: absolute;
+      top :10px;
+      right: -15px;
+    }
+    .enter {
+      width: 96%;
+      margin: 10px;
+      margin-top: 30px;
+    }
+    .enter-message {
+      padding: 10px;
+      border-radius: 15px;
+      border: 1px solid #ED0000;
+      width: calc(100% - 55px);
+    }
+    textarea:focus, input:not(#submit):focus, .uneditable-input:focus {
+      border-color: #ED0000;
+      box-shadow: 0 1px 1px #ED0000 inset, 0 0 8px #ED0000;
+      outline: 0 none;
+    } 
+    .btn-submit {
+      background-color: #ED0000;
+      color: white;
+      padding: 10px;
+      border-radius: 15px;
+      border: 0px;
+      width: 50px;
+      border: 1px solid #ED0000;
+    }
+    @media (orientation: portrait) {
+      .chatroom {
+        width: 95%;
+      }
+    }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -148,10 +165,10 @@
 </script>
 
 <div class="wrap-btn">
-  <span class="refresh" id="refresh" onClick="refresh()">새로고침</span>
+  <span class="refresh btn-effect" id="refresh" onClick="refresh()">새로고침</span>
 
   {% if user.is_authenticated or user.username == "admin" %}
-      <a class="delete-room" href="{% url 'delete_room' my_room.id %}">채팅방 삭제</a>
+      <a class="delete-room btn-effect" href="{% url 'delete_room' my_room.id %}">채팅방 삭제</a>
   {% endif %}
 </div>
 
@@ -183,7 +200,7 @@
     <form method="POST" action="{% url 'create_message' my_room.id %}" class="align-center">
       {% csrf_token %}
       {{message_form}}
-      <input type="submit" class="btn-submit" value="전송">
+      <input type="submit" class="btn-submit btn-effect2" value="전송">
     </form>
   </div>
 </div>

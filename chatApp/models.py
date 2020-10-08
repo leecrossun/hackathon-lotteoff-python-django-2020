@@ -11,7 +11,7 @@ class Room(models.Model):
         return self.user
         
     def summary(self):
-        return self.last_message[:30]
+        return self.last_message[:40]
 
 
 class Message(models.Model):

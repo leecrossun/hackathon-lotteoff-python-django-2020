@@ -71,8 +71,14 @@ def create_message(request, room_id):
 
 
 def chat_refresh(reqeust, room_id):
-    messages = Message.objects.filter(room = room_id)
+    room = get_object_or_404(Room, pk=room_id)
+    if reqeust.user.username == "admin":
+        room.admin_read = True
+    else:
+        room.user_read = True
+    room.save()
 
+    messages = Message.objects.filter(room = room_id)
     i = 0
     message_items = {}
     for message in  messages:
