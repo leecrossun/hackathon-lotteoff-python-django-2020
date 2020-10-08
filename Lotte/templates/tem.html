@@ -10,49 +10,14 @@
     <title>LOTTE OFF</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
     <script src='main.js'></script>
 
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav {
-            width: 30000px;
-            height: 80px;
-            display: table-cell;
-            vertical-align: middle;
-            background-color: #ED0000;
-        }
-
-        .navBtn-s,
-        .navBtn-l {
-            display: inline;
-            margin-right: 20px;
-            color: white;
-        }
-
-        .navBtn-s:hover,
-        .navBtn-r:hover {
-            color: black;
-            cursor: pointer;
-        }
-
-        .navBtn-r {
-            float: right;
-            display: inline;
-            color: white;
-            margin-right: 20px;
-        }
-
-        .logo {
-            margin-left: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            color: white
-        }
-
         /* 토글 */
         /* The switch - the box around the slider */
         .switch {
@@ -116,53 +81,61 @@
             border-radius: 50%;
         }
 
-        p {
-            margin: 0px;
-            display: inline-block;
-            font-size: 15px;
-            font-weight: bold;
+        /*** 새로운 navbar ***/
+        nav {
+            height: 80px;
+            background-color: #ED0000;
+        }
+
+        a {
+            color:white;
         }
     </style>
 </head>
 
 <body>
-    <div class="nav">
-        <span class="logo">LOTTE OFF</span>
-        <ul class="navBtn-l">
-            <li class="navBtn-s">
-                <!-- 토글 -->
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                </label>
+    <nav class="navbar navbar-expand-lg">
+        <span class="logo" style="padding-right:10px; color:white; font-size:20px; font-weight:bold;">LOTTE OFF</span>
+        </button>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+        </label>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item dropdown {%if 'shop' in request.path%}active{%endif%}">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">카테고리</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {%for cat in links%}
+                    <a class="dropdown-item" href="{{cat.get_url}}">{{cat.name}}</a>
+                    {%endfor%}
+                </div>
             </li>
-            <li class="navBtn-s" onclick="location.href='/'">HOME</li>
+            <li class="nav-item"><a class="nav-link" href="/newProduct/">신제품</a></li>
+            <li class="nav-item"><a class="nav-link" href="/select/">드라이브 스루 신청</a></li>
+            <li class="nav-item"><a class="nav-link" href="/driveThru/">드라이브 스루 확인</a></li>
+
+            <li class="nav-item" style="padding-left:500px;"><a class="nav-link" href="{%url 'chatbot'%}">고객센터</a></li>
             
-            <li><a href="{%url 'shop:allProdCat'%}">모든상품</a></li>
-            {%for cat in links%}
-                <li><a href="{{cat.get_url}}">{{cat.name}}</a></li>
-            {%endfor%}
-            
-            <li class="navBtn-s" onclick="location.href='/newProduct/'">신제품</li>
-            <li class="navBtn-s" onclick="location.href='/select/'">드라이브 스루 신청</li>
-            <li class="navBtn-s" onclick="location.href='/driveThru/'">드라이브 스루 확인</li>
-            <li class="navBtn-r" onclick="location.href='/accounts/signup'">회원가입</li>
             {% if user.is_authenticated %}
-            <li class="navBtn-r" onclick="location.href='/accounts/logout'">로그아웃</li>
-            {%if item_count > 0 %}
-                <li class="navBtn-r" onclick="location.href='/cart/'">장바구니({{item_count}})</li>
+                {%if item_count > 0 %}
+                <li class="nav-item-r"><a class="nav-link" href="/cart/">장바구니({{item_count}})</a></li>
+                {%else%}
+                <li class="nav-item-r"><a class="nav-link" href="/cart/">장바구니</a></li>
+                {%endif%}
+            <li class="nav-item"><a class="nav-link" href="">{{user.username}} 님이 로그인 중</a></li>
+            <li class="nav-item"><a class="nav-link" href="/accounts/logout">로그아웃</a></li>
             {%else%}
-                <li class="navBtn-r" onclick="location.href='/cart/'">장바구니</li>
+            <li class="nav-item"><a class="nav-link" href="/accounts/signup">회원가입</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% provider_login_url 'google' %}">소셜로그인</a></li>
             {%endif%}
-            <li class="navBtn-r">{{user.username}} 님이 로그인 중</li>
-            {% else %}
-            <li class="navBtn-r"><a href="{% provider_login_url 'google' %}">소셜로그인</a></li>
-            {% endif %}
-            <li class="navBtn-r"><a href="{%url 'chatbot'%}">고객센터</a></li>
-        </ul>
-
-    </div>
-
+            
+          </ul>
+        </div>
+    </nav>
+            
 
     {%block contents%}
     {%endblock%}
