@@ -5,64 +5,90 @@
     .align-center {
       margin: 0px auto;
     }
-    .enter-room, .btn {
-        border: 1px solid #ED0000;
-        color: black;
-        padding: 8px;
+    .enter-room, .my-btn {
+        padding: 10px;
         border-radius: 15px;
         font-size: 9pt;
+        text-decoration: none;
     }
     .wrap-btn {
         text-align: center;
         padding: 30px;
+        padding-bottom: 40px;
     }
-    .btn {
+    .my-btn {
         margin: 0px 3%;
+    }
+    .btn-effect {
+        border: 1px solid #ED0000;
+        color: black;
+    }
+    .btn-effect:hover {
+        text-decoration: none;
+        background-color: #ED0000;
+        color: white;
+        transition-property: background-color, color;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-in-out;
     }
     table {
         width: 70%;
         background-color: #EEEEEE;
         text-align: center;
+        border-radius: 15px;
+        border-collapse: collapse;
     }
     td {
-        width: 25%;
-        padding: 20px;
+        padding: 15px;
+        border: 1px solid white;
     }
-    .td-message {
+    .td-user {
+        width: 150px;
     }
-    a {
-        text-decoration: none;
-        color: black;
+    .td-read {
+        width: 83px;
+    }
+    .td-enter {
+        width: 111px;
     }
     @media (orientation: portrait) {
-        .btn {
+        .my-btn {
             display: block;
             margin: 10px auto;
             width: 30%;
             min-width: 95px;
         }
     }
+    body {
+        margin-bottom: 50px;
+    }
 </style>
     
 <div class="wrap-btn">
     {% if user.is_authenticated and not user.username == "admin" %}
-        <a class="btn" href="{% url 'create_room' %}">새로 만들기</a>
+        <a class="my-btn btn-effect" href="{% url 'create_room' %}">새로 만들기</a>
     {% endif %}
-    <a class="btn" href="{% url 'chatbot_unread' %}">안 읽은 채팅방</a>
-    <a class="btn" href="{% url 'chatbot' %}">전체 채팅방</a>
+    <a class="my-btn btn-effect" href="{% url 'chatbot_unread' %}">안 읽은 채팅방</a>
+    <a class="my-btn btn-effect" href="{% url 'chatbot' %}">전체 채팅방</a>
 </div>
 
-<table class="align-center">
-    {% if user.is_authenticated %}
+{% if user.is_authenticated %}
+    <table class="align-center">
+        <tr>
+            {% if user.username == "admin" %}
+                <td class="td-user">사용자 이름</td>
+            {% endif %}
+            <td>내용(40자)</td>
+        </tr>
         {% for room in all_room %}
             <tr>
                 {% if user.username == "admin" %}
-                    <td>{{room.user}}</td>
+                    <td class="td-user">{{room.user}}</td>
                 {% endif %}
 
                 <td class="td-message">{{room.summary}}</td>
 
-                <td>
+                <td class="td-read">
                     {% if user.username == "admin"%}
                         {% if not room.admin_read %}
                             안읽음
@@ -74,11 +100,11 @@
                     {% endif %}
                 </td>
             
-                <td>
-                    <a class="enter-room" href="{% url 'chatroom' room.id %}">들어가기</a>
+                <td class="td-enter">
+                    <a class="enter-room btn-effect" href="{% url 'chatroom' room.id %}">들어가기</a>
                 </td>
             </tr>
         {% endfor %}
-    {% endif %}
-</table>
+    </table>
+{% endif %}
 {%endblock%}
