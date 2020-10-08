@@ -1,54 +1,103 @@
 {%extends 'tem.html'%}
 {%block contents%}
 
-{% for message in my_room.message_set.all %}
-    <div>
-        {{message.sender}} : {{message.body}} ({{message.time}})
-    </div>
-{% endfor %}
-<form method="POST" action="{% url 'create_message' my_room.id %}">
-    {% csrf_token %}
-    {{message_form}}
-    <input type="submit" value="확인">
-</form>
-<br>
-
-<p id="refresh">새로고침</p>
-<div id="here">여기<br></div>
+<style>
+  .align-center {
+    margin: 0px auto;
+  }
+  .wrap-btn {
+    text-align: center;
+    padding: 30px;
+  }
+  .refresh, .delete-room {
+    border: 1px solid #ED0000;
+    color: black;
+    padding: 8px;
+    border-radius: 15px;
+    margin: 0px 3%;
+    font-size: 9pt;
+  }
+  .delete-room {
+    text-decoration: none;
+  }
+  .chatroom {
+    width: 40%;
+    background-color: #F3F3F3;
+    padding: 5px;
+    border-radius: 15px;
+    margin-bottom: 50px;
+  }
+  .message-right {
+    text-align: right;
+  }
+  .sender {
+    margin: 7px 10px 5px 10px;
+  }
+  .body {
+    display: inline-block;
+    position: relative;
+    max-width: 70%;
+    padding: 10px;
+    padding-top: 8px;
+    background: #DDDDDD;
+    border-radius: 15px;
+    word-wrap: break-word;
+    margin: 0px 20px;
+  }
+  .body-left:after {
+    border-top:15px solid  #DDDDDD;
+    border-left: 15px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 0px solid transparent;
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: -15px;
+  }
+  .body-right:after {
+    border-top:15px solid  #DDDDDD;
+    border-left: 0px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 0px solid transparent;
+    content: "";
+    position: absolute;
+    top :10px;
+    right: -15px;
+  }
+  .enter {
+    width: 96%;
+    margin: 10px;
+    margin-top: 30px;
+  }
+  .enter-message {
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #ED0000;
+    width: calc(100% - 55px);
+  }
+  textarea:focus, input:not(#submit):focus, .uneditable-input:focus {
+    border-color: #ED0000;
+    box-shadow: 0 1px 1px #ED0000 inset, 0 0 8px #ED0000;
+    outline: 0 none;
+  } 
+  .btn-submit {
+    background-color: #ED0000;
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+    border: 0px;
+    width: 50px;
+  }
+  @media (orientation: portrait) {
+	  .chatroom {
+      width: 95%;
+    }
+  }
+</style>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<!-- <script type="text/javascript">
-  $("#refresh").click(function(){
-    var pk = $(this).attr('name')
-    $.ajax({ 
-      type: "POST", 
-      url: "{% url 'chat_refresh' my_room.id %}", 
-      data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
-      dataType: "json", 
-      success: function(response){ 
-        //document.getElementById('here').innerHTML = "성공";
-        for (i in response) {
-            //지금은 계속 +=로 추가하는데 나중에는 한 문자열에 넣고 한 번에 
-            var message = JSON.parse(response[i])
-            for (var key in message) {
-                document.getElementById('here').innerHTML += message[key];
-                if (key == "sender") {
-                  document.getElementById('here').innerHTML += ": ";
-                } else {
-                  document.getElementById('here').innerHTML += "<br>";
-                }
-            }
-        }
-      },
-      error: function(request, status, error){ // 통신 실패시 - 로그인 페이지 리다이렉트
-        document.getElementById('here').innerHTML = "오류";
-      },
-    });
-  })
-</script> -->
-
 <script>
-  setInterval("refresh()", 1000);
+  // setInterval("refresh()", 1000);
 
   function refresh() {
       $.ajax({ 
@@ -57,28 +106,86 @@
         data: {'pk': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
         dataType: "json", 
         success: function(response){ 
-          document.getElementById('here').innerHTML = "성공<br>";
+          //document.getElementById('here').innerHTML = "성공<br>";
+          var chat = "";
           for (i in response) {
-              //지금은 계속 +=로 추가하는데 나중에는 한 문자열에 넣고 한 번에 
               var message = JSON.parse(response[i])
+              var sameuser = false;
               for (var key in message) {
-                  document.getElementById('here').innerHTML += message[key];
                   if (key == "sender") {
-                    document.getElementById('here').innerHTML += ": ";
-                  } else {
-                    document.getElementById('here').innerHTML += "<br>";
+                      if (message[key] == "{{user.username}}") {
+                          sameuser = true;
+                          chat += '<div class="message-right">';
+                          chat += '<div class="sender sender-right">';
+                          chat += message[key];
+                          chat += '</div>';
+                      } else {
+                          chat += '<div class="message-left">';
+                          chat += '<div class="sender sender-left">';
+                          chat += message[key];
+                          chat += '</div>';
+                      }
+                  } else if (key == "body") {
+                      if (sameuser) {
+                          sameuser = false;
+                          chat += '<div class="body body-right">';
+                          chat += message[key];
+                          chat += '</div>';
+                          chat += '</div>';
+                      } else {
+                          chat += '<div class="body body-left">';
+                          chat += message[key];
+                          chat += '</div>';
+                          chat += '</div>';
+                      }
                   }
               }
           }
+          document.getElementById('chat').innerHTML = chat;
         }
       });
   }
-
 </script>
 
+<div class="wrap-btn">
+  <span class="refresh" id="refresh" onClick="refresh()">새로고침</span>
 
-{% if user.is_authenticated or user.username == "admin" %}
-    <a href="{% url 'delete_room' my_room.id %}">채팅방 삭제</a>
-{% endif %}
+  {% if user.is_authenticated or user.username == "admin" %}
+      <a class="delete-room" href="{% url 'delete_room' my_room.id %}">채팅방 삭제</a>
+  {% endif %}
+</div>
+
+<div class="align-center chatroom">
+  <div id="chat">
+    {% for message in my_room.message_set.all %}
+      {% if message.sender == user.username %}
+        <div class="message-right">
+          <div class="sender sender-right">
+            {{message.sender}}
+          </div>
+          <div class="body body-right">
+            {{message.body}}
+          </div>
+        </div>
+      {% else %}
+        <div class="message-left">
+          <div class="sender sender-left">
+            {{message.sender}}
+          </div>
+          <div class="body body-left">
+            {{message.body}}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %} 
+  </div> 
+  <div class="enter">
+    <form method="POST" action="{% url 'create_message' my_room.id %}" class="align-center">
+      {% csrf_token %}
+      {{message_form}}
+      <input type="submit" class="btn-submit" value="전송">
+    </form>
+  </div>
+</div>
 
 {%endblock%}
