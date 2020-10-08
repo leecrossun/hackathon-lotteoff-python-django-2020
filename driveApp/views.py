@@ -23,6 +23,7 @@ def driveThru(request):
     return render(request, 'driveThru.html', {'form':form, 'posts':posts})
 
 def new(request):
+    
     return render(request, 'new.html')
 
 def delete (request, pk):
