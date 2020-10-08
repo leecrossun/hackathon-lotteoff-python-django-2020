@@ -1,10 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import NewProduct
 from .forms import ApplyForm
+from django.core.paginator import Paginator
 
 def newProduct(request):
-    all_new = NewProduct.objects.all()
-    return render(request, "newProduct.html", {'news':all_new})
+    data = NewProduct.objects
+    datas= NewProduct.objects.all()
+    paginator = Paginator(datas, 3)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    return render(request, "newProduct.html", {'news':datas, 'posts':posts})
 
 def newDetail(request, new_id):
     post = get_object_or_404(NewProduct, pk=new_id)
