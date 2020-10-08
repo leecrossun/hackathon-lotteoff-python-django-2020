@@ -1,33 +1,60 @@
 {%extends 'tem.html'%}
+{%block head%}
+<style>
+.new_detail {
+    width: 60%;
+    min-height: 800px;
+}
 
+.new_img {
+    margin: 20px;
+}
+
+.new_content {
+    min-height: 350px;
+}
+</style>
+{%endblock%}
 {%block contents%}
+<center>
+<div class="new_detail">
+<div class="new_content">
 <h2>{{post.title}}</h2>
-<p>{{post.description}}</p>
-<img src="{{post.image.url}}" alt="신제품" width="300px">
 
+<img class="new_img" src="{{post.image.url}}" alt="신제품" width="300px">
+<br><br>
+<p>{{post.description|linebreaksbr}}</p>
+</div>
+<hr>
+<p>시식, 시음 신청</p>
+<form method="POST" action="{% url 'createApply' post.id%}">
+    <table>
+        {% csrf_token %}
+        {{apply_form.as_table}}
+        
+    </table><br><br>
+    <input type="submit" value="제출">
+</form>
+<hr>
 {%for apply in post.apply_set.all %}
 {%if user == apply.author%}
+
     <h4>💗{{apply.author}}</h4>
     <p>지점명: {{apply.store_name}}</p>
     <p>가져갈 시간: {{apply.date_time}}</p>
     <p>신청 동기: {{apply.content}}</p>
 
     <a href="{% url 'deleteApply' post.id apply.id %}">삭제</a>
-
+<hr>
 {%else%}
-다른 고객님의 신청글입니다.
-    
 
+<p>다른 고객님의 신청글입니다.</p>
+    
+<hr>
 {%endif%}
-    <hr>
     
 {%endfor%}
-<form method="POST" action="{% url 'createApply' post.id%}">
-    <table>
-        {% csrf_token %}
-        {{apply_form.as_table}}
-        <input type="submit" value="제출">
-    </table>
-</form>
 
+</div>
+</center>
 {%endblock%}
