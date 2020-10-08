@@ -1,67 +1,84 @@
 {%extends 'tem.html'%}
 {%block contents%}
 
-<br><br><br><br><br><br>
+<style>
+    .align-center {
+      margin: 0px auto;
+    }
+    .enter-room, .btn {
+        border: 1px solid #ED0000;
+        color: black;
+        padding: 8px;
+        border-radius: 15px;
+        font-size: 9pt;
+    }
+    .wrap-btn {
+        text-align: center;
+        padding: 30px;
+    }
+    .btn {
+        margin: 0px 3%;
+    }
+    table {
+        width: 70%;
+        background-color: #EEEEEE;
+        text-align: center;
+    }
+    td {
+        width: 25%;
+        padding: 20px;
+    }
+    .td-message {
+    }
+    a {
+        text-decoration: none;
+        color: black;
+    }
+    @media (orientation: portrait) {
+        .btn {
+            display: block;
+            margin: 10px auto;
+            width: 30%;
+            min-width: 95px;
+        }
+    }
+</style>
+    
+<div class="wrap-btn">
+    {% if user.is_authenticated and not user.username == "admin" %}
+        <a class="btn" href="{% url 'create_room' %}">새로 만들기</a>
+    {% endif %}
+    <a class="btn" href="{% url 'chatbot_unread' %}">안 읽은 채팅방</a>
+    <a class="btn" href="{% url 'chatbot' %}">전체 채팅방</a>
+</div>
 
-{% if user.is_authenticated and not user.username == "admin" %}
-    <a href="{% url 'create_room' %}">새로 만들기</a>
-{% endif %}
-
-<br><br><br>
-<a href="{% url 'chatbot_unread' %}">안 읽은 채팅방</a>
-<br>
-<a href="{% url 'chatbot' %}">전체 채팅방</a>
-<br><br><br>
-<!-- {% if user.is_authenticated %}
-    {% if user.username == "admin" %}
+<table class="align-center">
+    {% if user.is_authenticated %}
         {% for room in all_room %}
-            <div>
-                <p>{{room.user}}</p>
-                <p>{{room.last_message}}</p>
-                {% if not room.admin_read %}
-                    <p>안읽음</p>
+            <tr>
+                {% if user.username == "admin" %}
+                    <td>{{room.user}}</td>
                 {% endif %}
-                <a href="{% url 'chatroom' room.id %}">들어가기</a>
-            </div>
-            <br><br>
-        {% endfor %}
-    {% else %}
-        {% for room in my_room %}
-            <div>
-                <p>{{room.last_message}}</p>
-                {% if not room.user_read %}
-                    <p>안읽음</p>
-                {% endif %}
-                <a href="{% url 'chatroom' room.id %}">들어가기</a>
-            </div>
+
+                <td class="td-message">{{room.summary}}</td>
+
+                <td>
+                    {% if user.username == "admin"%}
+                        {% if not room.admin_read %}
+                            안읽음
+                        {% endif %}
+                    {% else %}    
+                        {% if not room.user_read %}
+                            안읽음
+                        {% endif %}
+                    {% endif %}
+                </td>
+            
+                <td>
+                    <a class="enter-room" href="{% url 'chatroom' room.id %}">들어가기</a>
+                </td>
+            </tr>
         {% endfor %}
     {% endif %}
-{% endif %} -->
-
-
-{% if user.is_authenticated %}
-        {% for room in all_room %}
-            <div>
-                {% if user.username == "admin" %}
-                    <p>username: {{room.user}}</p>
-                {% endif %}
-
-                <p>{{room.last_message}}</p>
-
-                {% if user.username == "admin"%}
-                    {% if not room.admin_read %}
-                        <p>안읽음</p>
-                    {% endif %}
-                {% else %}    
-                    {% if not room.user_read %}
-                        <p>안읽음</p>
-                    {% endif %}
-                {% endif %}
-
-                <a href="{% url 'chatroom' room.id %}">들어가기</a>
-            </div>
-            <br><br>
-        {% endfor %}
-{% endif %}
-
+</table>
 {%endblock%}
