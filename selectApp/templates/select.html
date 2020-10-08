@@ -128,7 +128,7 @@
     <br><br>
     
     {% for r in regionPost %}
-    <a id="city" href="{% url 'storeFilter' r.storeName %}">{{r.storeName}}</a>
+    <a id="city" href="{% url 'storeFilter' r.storeName %}" style="color: black;">{{r.storeName}}</a>
     {% endfor %}
 </div>
 
