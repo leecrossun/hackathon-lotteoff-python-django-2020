@@ -1,45 +1,68 @@
 {%extends 'tem.html'%}
-{%load static%}
 {% load humanize %}
+
+{%block head%}
+<style>
+    .div1 {
+        padding-left: 50px;
+    }
+    #pro_name {
+        font-size: 28px;
+        color: black;
+    }
+
+    #price {
+        margin-top: 15px;
+        font-size: 20px;
+    }
+</style>
+{%endblock%}
 
 {%block contents%}
 
-{%if category%}
-    <div>
-        <div>
-            <p><a href="{%url 'shop:allProdCat'%}">상품컬렉션</a> | {{category.name}}</p>
-        </div>
-    </div>
-{%endif%}
+<div class="div1">
+    {%if category%}
+    <h2 style="padding-top:20px;"><b>{{category.name}}</b></h2>
+    {%endif%}
+    
+    <table>
+        {%for product in prodPage%}
+        <tr style="border-bottom: 2px dashed #E88B8B;">
+            <td style="padding: 40px">
+                <a href="{{product.get_url}}"><img src="{{product.image.url}}" width="300px" height="200px" alt="상품 사진"></a>
+            </td>
+            <td style="padding-left:50px;">
+                <b style="color: gray;">{{product.storeName}} &nbsp;<p id="pro_name">{{product.name}}</p></b>
+                <p id="price">가격: {{product.price|intcomma}}원</p>
+                <p>{{product.summary}} ...</p>
 
-<div>
-{%if category%}
-    <div>
-        <img src="{{category.image.url}}" alt="{{category.name}}">
-    </div><br>
-    <div>
-        {{category.name}}
-        {{category.description}}
-    </div>
-{%else%}
-    <div>
-        <h1>상품컬렉션</h1>
-        <p>상품컬렉션입니다.</p>
-    </div>
-{%endif%}
-</div>
-<div>
-    <div>
-        {%for product in products%}
-        <div>
-            <a href="{{product.get_url}}"><img src="{{product.image.url}}" alt="{{product.name}}"></a>
-            <div>
-                <h4>{{product.name}}</h4>
-                <p>A${{product.price|intcomma}}</p>
-            </div>
-        </div>
+                {% if product.unavailable %}
+                <p id="available" style="color:red;">품절</p>
+                {% else %}
+                <p id="available" style="color:red;">재고 있음</p>
+                {% endif %}
+            </td>
+        </tr>
         {%endfor%}
-    </div>
+
+    </table>
+</div>
+
+
+<div align="center" style="padding: 20px 0px;">
+    {% if prodPage.has_previous %}
+    <a href="?page=1">First</a>
+    <a href="?page={{prodPage.previous_page_number}}">Previous</a>
+    {% endif %}
+
+    <span>{{prodPage.number}}</span>
+    <span>of</span>
+    <span>{{prodPage.paginator.num_pages}}</span>
+
+    {% if prodPage.has_next %}
+    <a href="?page={{prodPage.next_page_number}}">Next</a>
+    <a href="?page={{prodPage.paginator.num_pages}}">Last</a>
+    {% endif %}
 </div>
 
 {%endblock%}
