@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import NewProduct
 from .forms import ApplyForm
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 def newProduct(request):
     data = NewProduct.objects
@@ -16,6 +17,7 @@ def newDetail(request, new_id):
     apply_form = ApplyForm()
     return render(request, 'newDetail.html', {'post':post, 'apply_form':apply_form,})
 
+@login_required
 def createApply(request, new_id):
     apply_form = ApplyForm(request.POST)
     if apply_form.is_valid():
@@ -25,8 +27,9 @@ def createApply(request, new_id):
         apply.save()
         return redirect('newDetail', new_id)
 
+@login_required
 def deleteApply(request, new_id, apply_id):
-    apply = Apply.object.get(pk = apply_id)
+    apply = Apply.objects.get(pk = apply_id)
     if request.user == apply.author:
         apply.delete()
         return redirect('newDetail', new_id)

@@ -1,63 +1,93 @@
 {%extends 'tem.html'%}
 {%block head%}
 <style>
-.new_detail {
-    width: 60%;
-    min-height: 800px;
-}
+    .new_d_box {width: 60%;}
+    .new_detail {
+        min-height: 400px;
+        border-bottom: #BDBDBD solid 1px;
+    }
 
-.new_img {
-    margin: 20px;
-}
+    .new_img {
+        margin: 20px;
+    }
 
-.new_content {
-    min-height: 350px;
-}
+    .new_content {
+        min-height: 350px;
+    }
 
-.new_detail_slogan {margin-top: 50px;}
+    .new_detail_slogan {
+        margin-top: 50px;
+    }
+
+    .delete_btn {
+        color: red;
+    }
+
+    .apply_list {
+        margin-top: 40px;
+        min-height: 200px;
+        
+    }
+
+    .apply_form {
+        min-height: 200px;
+        border-bottom: #BDBDBD solid 1px;
+        margin-top: 40px;
+    }
 </style>
 {%endblock%}
+
 {%block contents%}
 <center>
-<div class="new_detail">
-<div class="new_content">
-<h2 class="new_detail_slogan">{{post.title}}</h2>
+    <div class="new_d_box">
+    <div class="new_detail">
+        <div class="new_content">
+            <h2 class="new_detail_slogan"><b>{{post.title}}</b></h2>
 
-<img class="new_img" src="{{post.image.url}}" alt="신제품" width="300px">
-<br><br>
-<p>{{post.description|linebreaksbr}}</p>
+            <img class="new_img" src="{{post.image.url}}" alt="신제품" width="300px">
+            <br><br>
+            <p>{{post.description|linebreaksbr}}</p>
+        </div>
+
+    </div>
+    <div class="apply_form">
+    <h4><b>시식, 시음 신청</b></h4>
+    <p>*양식에 맞지 않게 작성한 경우 신청이 취소될 수 있습니다.*</p><br>
+    {%if user.is_authenticated%}
+    <form method="POST" action="{% url 'createApply' post.id%}">
+        <table>
+            {% csrf_token %}
+            {{apply_form.as_table}}
+
+        </table><br><br>
+        <input type="submit" value="제출">
+    </form><br><br>
+    {%else%}
+    <h4>🔒로그인 후 신청 가능합니다</h4>
+    {%endif%}
 </div>
-<hr>
-<h4>시식, 시음 신청</h4>
-<p>*양식에 맞지 않게 작성한 경우 신청이 취소될 수 있습니다.*</p><br>
-<form method="POST" action="{% url 'createApply' post.id%}">
-    <table>
-        {% csrf_token %}
-        {{apply_form.as_table}}
-        
-    </table><br><br>
-    <input type="submit" value="제출">
-</form>
-<hr>
-{%for apply in post.apply_set.all %}
-{%if user == apply.author%}
+    <div class="apply_list">
+        <h3><b>신청글 조회</b></h3>
+        <hr>
+        {%for apply in post.apply_set.all %}
+        {%if user == apply.author%}
+        <h4>💗{{apply.author}}</h4>
+        <p><b>지점명</b>: {{apply.store_name}}</p>
+        <p><b>가져갈 시간</b>: {{apply.date_time}}</p>
+        <p><b>신청 동기</b>: {{apply.content}}</p>
 
-    <h4>💗{{apply.author}}</h4>
-    <p>지점명: {{apply.store_name}}</p>
-    <p>가져갈 시간: {{apply.date_time}}</p>
-    <p>신청 동기: {{apply.content}}</p>
+        <a class="delete_btn" href="{% url 'deleteApply' post.id apply.id %}">삭제</a>
 
-    <a href="{% url 'deleteApply' post.id apply.id %}">삭제</a>
-<hr>
-{%else%}
+        <hr>
+        {%else%}
 
-<p>다른 고객님의 신청글입니다.</p>
-    
-<hr>
-{%endif%}
-    
-{%endfor%}
+        <p>🔒다른 고객님의 신청글입니다.</p>
 
-</div>
+        <hr>
+        {%endif%}
+
+        {%endfor%}
+    </div>
+    </div>
 </center>
 {%endblock%}
