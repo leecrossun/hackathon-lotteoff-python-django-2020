@@ -1,5 +1,7 @@
 {%extends 'tem.html'%}
 {%load static%}
+{% load humanize %}
+
 {%block contents%}
 
 {%if category%}
@@ -33,7 +35,7 @@
             <a href="{{product.get_url}}"><img src="{{product.image.url}}" alt="{{product.name}}"></a>
             <div>
                 <h4>{{product.name}}</h4>
-                <p>A${{product.price}}</p>
+                <p>A${{product.price|intcomma}}</p>
             </div>
         </div>
         {%endfor%}
