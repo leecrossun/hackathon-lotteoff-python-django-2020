@@ -20,3 +20,10 @@ class Apply(models.Model):
     store_name = models.CharField(max_length=50, null=True)
     date_time = models.CharField(max_length=50, null=True)
     newProduct = models.ForeignKey(NewProduct, on_delete = models.CASCADE)
+
+class Evaluation(models.Model):
+    e_title = models.CharField(max_length = 200)
+    e_author = models.ForeignKey(User, on_delete = models.CASCADE)
+    e_content = models.TextField()
+    e_upload_at = models.DateTimeField(auto_now=True)
+    e_newProduct = models.ForeignKey(NewProduct, on_delete = models.CASCADE)
