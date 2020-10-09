@@ -1,5 +1,5 @@
 {%extends 'tem.html'%}
-{%load static%}
+{% load humanize %}
 {%block contents%}
 
 <!DOCTYPE html>
@@ -68,16 +68,15 @@
                     {%for cart_item in cart_items%}
                         <tr>
                             <td>
-                                <a href="{{cart_item.product.get_absolute_url}}"><img src="{{cart_item.product.image.url}}" alt="" class="float-left rounded custom_image"></a>
+                                <a href="{{cart_item.product.get_url}}"><img src="{{cart_item.product.image.url}}" alt="" class="float-left rounded custom_image"></a>
                             </td>
                             <td class="text-left">
-                                {{cart_item.product.name}}<br>
-                                SKU : {{cart_item.product.id}}<br>
-                                개당 가격 : {{cart_item.product.price}}원<br>
-                                총금액 : {{cart_item.quantity}} x {{cart_item.product.price}}원
+                                <p style="font-weight:bold;">{{cart_item.product.name}}</p>
+                                개당 가격 : {{cart_item.product.price|intcomma}}원<br>
+                                총금액 : {{cart_item.quantity}} x {{cart_item.product.price|intcomma}}원
                             </td>
                             <td>
-                                {{cart_item.sub_total}}원
+                                {{cart_item.sub_total|intcomma}}원
                             </td>
                             {%if cart_item.quantity <= cart_item.product.stock%}
                                 <td>
@@ -111,7 +110,7 @@
                     </tr>
                     <tr>
                         <td class="text-left">
-                            총금액 : <strong>{{total}}원</strong>
+                            총금액 : <strong>{{total|intcomma}}원</strong>
                         </td>
                     </tr>
                 </tbody>

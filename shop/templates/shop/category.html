@@ -3,9 +3,6 @@
 
 {%block head%}
 <style>
-    .div1 {
-        padding-left: 50px;
-    }
     #pro_name {
         font-size: 28px;
         color: black;
@@ -19,10 +16,9 @@
 {%endblock%}
 
 {%block contents%}
-
-<div class="div1">
+<div class="container">
     {%if category%}
-    <h2 style="padding-top:20px;"><b>{{category.name}}</b></h2>
+    <h2><b>{{category.name}}</b></h2>
     {%endif%}
     
     <table>
@@ -31,10 +27,10 @@
             <td style="padding: 40px">
                 <a href="{{product.get_url}}"><img src="{{product.image.url}}" width="300px" height="200px" alt="상품 사진"></a>
             </td>
-            <td style="padding-left:50px;">
+            <td style="padding:0 50px;">
                 <b style="color: gray;">{{product.storeName}} &nbsp;<p id="pro_name">{{product.name}}</p></b>
                 <p id="price">가격: {{product.price|intcomma}}원</p>
-                <p>{{product.summary}} ...</p>
+                <p>{{product.summary|linebreaksbr}} ...</p>
 
                 {% if product.unavailable %}
                 <p id="available" style="color:red;">품절</p>

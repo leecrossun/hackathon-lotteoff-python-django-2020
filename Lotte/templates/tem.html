@@ -123,15 +123,15 @@
                 <li class="nav-item"><a class="nav-link" href="/select/">드라이브 스루 신청</a></li>
                 <li class="nav-item"><a class="nav-link" href="/driveThru/">드라이브 스루 확인</a></li>
 
-                <li class="nav-item" style="margin-left:500px;">
+                <li class="nav-item" style="margin-left:400px;">
                     <a class="nav-link" href="{%url 'chatbot'%}">고객센터</a>
                 </li>
 
                 {% if user.is_authenticated %}
                 {%if item_count > 0 %}
-                <li class="nav-item-r"><a class="nav-link" href="/cart/">장바구니({{item_count}})</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cart/">장바구니({{item_count}})</a></li>
                 {%else%}
-                <li class="nav-item-r"><a class="nav-link" href="/cart/">장바구니</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cart/">장바구니</a></li>
                 {%endif%}
                 <li class="nav-item"><a class="nav-link" href="">{{user.username}} 님이 로그인 중</a></li>
                 <li class="nav-item"><a class="nav-link" href="/accounts/logout">로그아웃</a></li>
