@@ -1,5 +1,7 @@
 {%extends 'tem.html'%}
 {%load static%}
+{% load humanize %}
+
 {%block contents%}
 
 <div>
@@ -17,7 +19,7 @@
             <div>
                 <div>
                     <h1>{{product.name}}이름이름</h1>
-                    <p>A${{product.price}}</p><br><br>
+                    <p>A${{product.price|intcomma}}</p><br><br>
                     <p>상품 설명</p><br>
                     {%if product.stock <= 0 %}
                         <p>재고없음</p>

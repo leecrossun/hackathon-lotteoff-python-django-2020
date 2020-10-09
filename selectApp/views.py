@@ -13,7 +13,11 @@ def regionFilter(request, region):
 
 def storeFilter(request, storeName):
     storePost = Product.objects.filter(storeName=storeName)
-    return render(request, 'detail_store.html', {"storePost":storePost, "storeName": storeName})
+    paginator = Paginator(storePost, 4)
+    page = request.GET.get('page')
+    storePage = paginator.get_page(page)
+    
+    return render(request, 'detail_store.html', {"storePost":storePage, "storeName": storeName})
 
 def detail_product(request, product_id):
     store = get_object_or_404(Product, pk=product_id)

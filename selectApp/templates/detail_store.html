@@ -1,34 +1,86 @@
 {%extends 'tem.html'%}
+{% load humanize %}
+
+{%block head%}
+<style>
+    .div1 {
+        padding-top: 20px;
+        padding-bottom: 15px;
+    }
+
+    .product {
+        border: 2px solid #D44848;
+        width:500px;
+        border-radius: 10px;
+    }
+
+    #detail_pro {
+        text-decoration: none;
+        color: black;
+    }
+
+    #pro_name {
+        font-size: 28px;
+        color: black;
+    }
+
+    #price {
+        margin-top: 15px;
+        font-size: 20px;
+    }
+
+    #available {
+        color: red;
+    }
+
+</style>
+{%endblock%}
 
 {%block contents%}
 
-<div align="center">
+<div align="center" class="div1">
 
-    <h2>{{storeName}} 상품 목록</h2>
+    <h2><b>롯데마트 {{storeName}}</b></h2>
 
-    <table>
+    <table style="margin-top: 40px;">
         <tr>
             <td>
                 {% for product in storePost %}
-                <div align="center" style="border: 1px solid black; width:500px">
-                    <p>{{product.name}}</p>
-                    <img src="{{product.image.url}}" width="100px" height="100px" alt="상품 사진">
-                    <p>{{product.price}}</p>
+                <a href="{% url 'detail_product' product.id %}" id="detail_pro">
+                    <div align="center" class="product">
+                        <p style="color: gray;">{{product.category}} &nbsp;<b id="pro_name">{{product.name}}</b></p>
+                        <img src="{{product.image.url}}" width="170px" height="100px" alt="상품 사진">
+                        <p id="price">{{product.price|intcomma}}원</p>
+    
+                        <!-- if문으로 품절여부 표시 -->
+                        {% if product.unavailable %}
+                        <p id="available">품절</p>
+                        {% else %}
+                        <p id="available">재고 있음</p>
+                        {% endif %}
+    
+                    </div>
+                </a>
 
-                    <!-- if문으로 품절여부 표시 true->품절, false->품절아님 -->
-                    {% if product.available == True %}
-                    <p>품절됨</p>
-                    {% else %}
-                    <p>재고 있음</p>
-                    {% endif %}
-
-                    <a href="{% url 'detail_product' product.id %}">상품 상세보기</a>
-                </div>
                 <br>
                 {% endfor %}
             </td>
         </tr>
     </table>
+
+    {% if storePost.has_previous %}
+    <a href="?page=1">First</a>
+    <a href="?page={{storePost.previous_page_number}}">Previous</a>
+    {% endif %}
+
+    <span>{{storePost.number}}</span>
+    <span>of</span>
+    <span>{{storePost.paginator.num_pages}}</span>
+
+    {% if storePost.has_next %}
+    <a href="?page={{storePost.next_page_number}}">Next</a>
+    <a href="?page={{storePost.paginator.num_pages}}">Last</a>
+    {% endif %}
 
 </div>
 

@@ -1,5 +1,57 @@
 {%extends 'tem.html'%}
 
+{%block head%}
+<style>
+    .div1 {
+        padding-top: 20px;
+    }
+
+    select {
+        width: 120px;
+        height: 40px;
+        margin-right: 15px;
+    }
+
+    option {
+        font-size: 18px;
+    }
+
+    #default {
+        font-weight: bolder;
+    }
+
+    #btn {
+        width: 70px;
+        height: 40px;
+        font-size: 18px;
+        font-weight: bolder;
+        background-color: gray;
+        border-radius: 8px;
+        color: white;
+        border: none;
+    }
+
+    #store {
+        font-size: 30px;
+        color: black;
+        text-decoration: none;
+    }
+
+    .store_border {
+        width: 300px;
+        border: 5px solid #E74444;
+        border-radius: 10px;
+    }
+
+    .hr {
+        border-bottom: 1px solid #F0B9B9;
+        padding-bottom: 15px;
+        padding-top: 15px;
+        width: 280px;
+    }
+</style>
+{%endblock%}
+
 {%block contents%}
 
 <script>
@@ -12,7 +64,7 @@
         var c2 = ["남양주시", "평택시"];
         var c3 = ["창원시 성산구", "창원시 의창구"];
         var c4 = ["구미시", "포항시"];
-        
+
         var selected = document.getElementById("s1");
         var option = selected.options[selected.selectedIndex].text;
         var city = document.getElementById("s2");
@@ -69,67 +121,78 @@
 
         switch (r1) {
             case "서울특별시":
-            if (r2 == "노원구") {
-                a1.href = "{% url 'regionFilter' '서울특별시 노원구' %}";
-            } else if (r2 == "강북구") {
-                a1.href = "{% url 'regionFilter' '서울특별시 강북구' %}";
-            }
-            break;
+                if (r2 == "노원구") {
+                    a1.href = "{% url 'regionFilter' '서울특별시 노원구' %}";
+                } else if (r2 == "강북구") {
+                    a1.href = "{% url 'regionFilter' '서울특별시 강북구' %}";
+                }
+                break;
 
             case "경기도":
-            if (r2 == "남양주시") {
-                a1.href = "{% url 'regionFilter' '경기도 남양주시' %}";
-            } else if (r2 == "평택시") {
-                a1.href = "{% url 'regionFilter' '경기도 평택시' %}";
-            }
+                if (r2 == "남양주시") {
+                    a1.href = "{% url 'regionFilter' '경기도 남양주시' %}";
+                } else if (r2 == "평택시") {
+                    a1.href = "{% url 'regionFilter' '경기도 평택시' %}";
+                }
 
-            break;
+                break;
 
             case "경상남도":
-            if (r2 == "창원시 성산구") {
-                a1.href = "{% url 'regionFilter' '경상남도 창원시 성산구' %}";
-            } else if (r2 == "창원시 의창구") {
-                a1.href = "{% url 'regionFilter' '경상남도 창원시 의창구' %}";
-            }
+                if (r2 == "창원시 성산구") {
+                    a1.href = "{% url 'regionFilter' '경상남도 창원시 성산구' %}";
+                } else if (r2 == "창원시 의창구") {
+                    a1.href = "{% url 'regionFilter' '경상남도 창원시 의창구' %}";
+                }
 
-            break;
+                break;
 
             case "경상북도":
-            if (r2 == "포항시") {
-                a1.href = "{% url 'regionFilter' '경상북도 포항시' %}";
-            } else if (r2 == "구미시") {
-                a1.href = "{% url 'regionFilter' '경상북도 구미시' %}";
-            }
+                if (r2 == "포항시") {
+                    a1.href = "{% url 'regionFilter' '경상북도 포항시' %}";
+                } else if (r2 == "구미시") {
+                    a1.href = "{% url 'regionFilter' '경상북도 구미시' %}";
+                }
 
-            break;
+                break;
         }
     }
 </script>
 
-<div align="center">
-    <h1>지점 고르기</h1>
+<div align="center" class="div1">
+    <h1><b>지점 고르기</b></h1>
+    <br>
 
     <select name="s1" id="s1" onchange="f1()">
-        <option value="">시/도 선택</option>
+        <option value="" id="default">도 선택</option>
         <option value="1">서울특별시</option>
         <option value="2">경기도</option>
         <option value="3">경상남도</option>
         <option value="4">경상북도</option>
     </select>
-    
+
+    &nbsp;&nbsp;&nbsp;
+
     <select name="s2" id="s2" onchange="f2()">
-        <option value="">시/구 선택</option>
+        <option value="" id="default">시/구 선택</option>
     </select>
-    
+
+    &nbsp;&nbsp;
     <a id="region">
-        <button>확인</button>
+        <button id="btn">확인</button>
     </a>
 
-    <br><br>
-    
-    {% for r in regionPost %}
-    <a id="city" href="{% url 'storeFilter' r.storeName %}" style="color: black;">{{r.storeName}}</a>
-    {% endfor %}
+    <br><br><br>
+
+    {% if regionPost %}
+    <div class="store_border">
+
+        {% for r in regionPost %}
+        <div class="hr">
+            <a id="store" href="{% url 'storeFilter' r.storeName %}">{{r.storeName}}</a><br>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 
 {%endblock%}
