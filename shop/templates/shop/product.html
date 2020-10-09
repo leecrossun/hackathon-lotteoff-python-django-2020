@@ -1,34 +1,84 @@
 {%extends 'tem.html'%}
-{%load static%}
 {% load humanize %}
+
+{%block head%}
+<style>
+    #storename {
+        font-size: 50px;
+        color: black;
+    }
+
+    .product {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        width: 800px;
+        border: 3px solid #C05151;
+        border-radius: 8px;
+    }
+
+    #price {
+        font-size: 32px;
+    }
+
+    #available {
+        color: red;
+        text-align: right;
+    }
+
+    #btn {
+        margin-top: 60px;
+        width: 200px;
+        height: 40px;
+        font-size: 18px;
+        font-weight: bolder;
+        background-color: gray;
+        border-radius: 8px;
+        color: white;
+        border: none;
+    }
+</style>
+{%endblock%}
 
 {%block contents%}
 
-<div>
-    <div>
-        <p><a href="{%url 'shop:allProdCat'%}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a> | {{product.name}}</p>
-    </div>
-    <div>
-        <br>
-        <div>
-            <div>
-                <div>
-                    <img src="{{product.image.url}}" alt="{{product.name}}">
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h1>{{product.name}}이름이름</h1>
-                    <p>A${{product.price|intcomma}}</p><br><br>
-                    <p>상품 설명</p><br>
-                    {%if product.stock <= 0 %}
-                        <p>재고없음</p>
-                    {%else%}
-                        <a href="{%url 'cart:add_cart' product.id%}">장바구니 담기</a>
-                    {%endif%}
-                </div>
-            </div>
-        </div>
+<div align="center" style="padding-top: 20px;">
+    <div class="product">
+        <table>
+            <tr>
+                <td colspan="3">
+                    <p><a href="{%url 'shop:allProdCat'%}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a> | {{product.name}}</p>
+                    <small style="margin: 0; color: #B8B7B7;">롯데마트 {{product.storeName}}</small>
+                    <p style="color: gray;"><b id="storename">{{product.name}}</b> &nbsp;&nbsp; {{product.category}}</p>
+                </td>
+            </tr>
+            <tr style="border-bottom: 2px dashed #E88B8B;">
+                <td style="padding-right: 70px; padding-bottom: 40px">
+                    <img src="{{product.image.url}}" width="410px" height="300px" alt="상품 사진">
+                </td>
+                <td>
+                    <p id="price">가격: {{product.price|intcomma}}원</p>
+    
+                    {% if product.unavailable %}
+                    <p id="available">품절</p>
+                    {% else %}
+                    <p id="available">재고 있음</p>
+
+                    <a href="{%url 'cart:add_cart' product.id%}">
+                        <button id="btn">장바구니 담기</button>
+                    </a>
+                    {% endif %}
+    
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top: 25px;">
+                    <p style="font-size: 28px; font-weight:bolder">상품 상세정보</p>
+                    <p style="font-size: 18px;">{{product.descriptions}}</p>
+                </td>
+            </tr>
+    
+        </table>
     </div>
 </div>
 
