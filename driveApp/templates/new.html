@@ -2,11 +2,16 @@
 
 {%block contents%}
 
-<h1>드라이브 스루 신청하기<h1>
-<h2>상품과 결제금액을 확인하고 픽업시간을 선택해주세요</h2>
-
-<form>
-    <p><input type="date"></p>
+<h1>드리이브 스루 신청하기<h1>
+<h2>주문한 상품 목록을 확인하고 픽업시간과 픽업받을 지점을 선택해주세요</h2>
+    {% for cart_item in cart_items %}
+    {{cart_item.product.name}}<br>
+    {% endfor %}
+<form action="{% url 'create' %}" method="post">
+    {%csrf_token%}
+    <p><input type="text" name="shop"></p>
+    <p><input type="time" name="time"></p>
+    <p><input type="date" name="date"></p>
     <p><input type="submit" value="Submit"></p>
 </form>
 

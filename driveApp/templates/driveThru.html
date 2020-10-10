@@ -6,16 +6,16 @@
         <div>
             <table border="1">
                 <th>지점명</th>
-                <th>상품</th>
-                <th>신청시간</th>
+                <th>픽업날짜</th>
                 <th>픽업시간</th>
+                <th>신청시간</th>
                 <th>신청상태</th>
                 <th>삭제</th>
                 {% for post in posts %}
                 <div style="border: 1px solid black;">
                     <tr>
                         <td>{{post.shop}}</td>
-                        <td>{{post.items}}</td>
+                        <td>{{post.pick_day}}</td>
                         <td>{{post.pick_date}}</td>
                         <td>{{post.pub_date}}</td>
                         <!-- 픽업 준비 상황 (신청완료 = 0 (디폴트) / 상품준비중 = 1 / 준비완료, 픽업대기 = 2 / 픽업완료 = 3) -->
