@@ -184,14 +184,16 @@
 
     {% if regionPost %}
     <div class="store_border">
-
         {% for r in regionPost %}
         <div class="hr">
             <a id="store" href="{% url 'storeFilter' r.storeName %}">{{r.storeName}}</a><br>
         </div>
         {% endfor %}
     </div>
+
     {% endif %}
+
+
 </div>
 
 {%endblock%}
