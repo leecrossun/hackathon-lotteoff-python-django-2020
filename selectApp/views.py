@@ -8,8 +8,8 @@ def select(request):
 
 def regionFilter(request, region):
     regionPost = Region.objects.filter(region=region)
-    store = regionPost.first()
-    return render(request, 'select.html', {"regionPost":regionPost, "store":store})
+    storeCount = regionPost.count()
+    return render(request, 'select.html', {"regionPost":regionPost, "count":storeCount})
 
 def storeFilter(request, storeName):
     storePost = Product.objects.filter(storeName=storeName)
