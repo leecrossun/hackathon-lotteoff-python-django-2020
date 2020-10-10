@@ -1,9 +1,74 @@
 {%extends 'tem.html'%}
 
-{%block contents%}
+{%block head%}
+<style>
 
-<div class="container">
-    <h1>LotteOFF 홈입니다.</h1>
+   .c1 {
+       
+       width: 60%;
+       height: 160px;
+       padding: 5px;
+
+       }
+    .c2 {
+        width: 60%;
+        height: 180px;
+        padding: 5px;
+        background-color: #F6F6F6;
+    }
+
+    .how{
+        width: 60%;
+        height: 300px;
+        padding: 5px;
+        margin-top: 100px;
+        background-color: #FFEAEA;
+    }
+
+    .t {
+        width:60%;
+        height: 250px;
+        margin-top: 100px;
+        
+    }
+
+</style>
+{%endblock%}
+
+{%block contents%}
+<center>
+<div class="t">
+    <h1><b>LOTTE OFF</b></h1><br>
+    <h2>드라이브 스루로 더 안전하고 편한 쇼핑</h2>
 </div>
+<div class="c1">
+    <p style="font-size: 40px; margin:0;">🛒</p>
+    <h3>온라인으로 빠른 주문</h3>
+    <p>고객님은 클릭만 하세요.<br> 롯데 마트가 바로 상품을 준비해드립니다.</p>
+</div>
+<div class="c2">
+    <p style="font-size: 40px; margin:0;">🚗</p>
+    <h3>안전한 드라이브 스루 방식</h3>
+    <p>코로나19가 유행하고 마트에 가는 것도 꺼려진다면?<br> 이제는 드라이브 스루로 안전하게 쇼핑하세요!</p>
+</div>
+<div class="c1">
+    <p style="font-size: 40px; margin:0;">🍧</p>
+    <h3>간편한 신제품 시식 신청</h3>
+    <p>간단한 신청서 작성하고 <br> 롯데 푸드의 신제품 시식단이 되어주세요.</p>
+</div>
+
+
+<div class="how">
+    <h3><b>이용방법</b></h3><br>
+    <p>1. '쇼핑' 버튼을 누르고, 집에서 가까운 롯데마트를 선택해주세요.</p>
+    <p>2. 구매할 상품들을 장바구니에 담아주세요.</p>
+    <p>3. 장바구니에서 주문을 완료해주시고, 상품을 가져가실 시간을 선택해주세요.</p>
+    <p>4. '주문확인'에서 드라이브 스루 신청이 제대로 되었는지 확인해주세요.</p>
+    <p>4. 선택하신 시간에 주변 롯데마트에서 드라이브 스루로 상품을 수령하실 수 있습니다!</p>
+    <br><br>
+    <button type="button" class="btn btn-outline-danger" onclick="location.href='/select/'"">쇼핑하러 가기</button>
+    
+</div>
+</center>
 
 {%endblock%}
