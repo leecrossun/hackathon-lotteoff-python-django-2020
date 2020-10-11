@@ -2,8 +2,7 @@
 {% providers_media_js %}
 <!DOCTYPE html>
 <html>
-{%block head%}
-{%endblock%}
+
 
 <head>
     <meta charset='utf-8'>
@@ -18,8 +17,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src='main.js'></script>
-
+    {%block head%}
+    {%endblock%}
     <style>
+        
         /* 토글 */
         /* The switch - the box around the slider */
         .switch {

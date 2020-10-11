@@ -6,4 +6,5 @@ urlpatterns = [
     path('loginWarning/', views.loginWarning, name='loginWarning'),
     path('delete/<int:pk>', views.delete, name="delete"),
     path('new/', views.new, name='new'),
+    path('create/', views.create, name='create'),
 ]

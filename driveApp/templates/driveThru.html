@@ -1,53 +1,130 @@
 {%extends 'tem.html'%}
+{%block head%}
+<style>
+    /* Font */
+    @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap');
 
+    * {
+        margin: 5px;
+        padding: 5px;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .container {
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        border-radius: 1em;
+    }
+
+    .container div {
+        border-radius: 1em;
+        border: 1px solid black;
+
+    }
+
+    /* Table Area */
+    .table {
+        font-size: 20px;
+    }
+
+    .table>.title {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    table {
+        text-align: center;
+        margin: 0px auto;
+        border-collapse: collapse;
+    }
+
+    tr {
+        border-bottom: 1px solid black;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    /* td>div {
+        height: 90%;
+        width: 100px;
+        border: none;
+    }
+
+    td .btn {
+        font-size: 15px;
+    } */
+
+    /* Button */
+    .btn {
+        border: 1px solid black;
+        margin: 10px;
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        border-radius: 0.5em;
+        font-size: 0.5em;
+        box-shadow: 3px 3px rgb(56, 56, 56);
+        text-transform: uppercase;
+    }
+
+    .btn:hover {
+        background-color: rgb(56, 56, 56);
+        box-shadow: 3px 3px rgb(56, 56, 56);
+        color: rgb(255, 255, 255);
+
+    }
+</style>
+{%endblock%}
 {%block contents%}
+<div class="container">
+    <p class="title" style="font-size: 40px; text-align: center; margin: 10px;">🚗 드라이브 스루 예약 내역 🚕</p>
+    <table class="table">
+        <th width="100px">지점명</th>
+        <th width="250px">픽업날짜</th>
+        <th>픽업시간</th>
+        <th width="300px">신청시간</th>
+        <th width="200px">신청상태</th>
+        <th>삭제</th>
+        {% for post in posts %}
+        <!-- <div style="border: 1px solid black;"> -->
+        <tr>
+            <td>{{post.shop}}</td>
+            <td>{{post.pick_day}}</td>
+            <td>{{post.pick_date}}</td>
+            <td>{{post.pub_date}}</td>
+            <!-- 픽업 준비 상황 (신청완료 = 0 (디폴트) / 상품준비중 = 1 / 준비완료, 픽업대기 = 2 / 픽업완료 = 3) -->
+            {%if post.state == 0%}
+            <td>신청완료(대기중)</td>
+            {%elif post.state == 1%}
+            <td>상품 준비중</td>
+            {%elif post.state == 2%}
+            <td>픽업대기</td>
+            {% else %}
+            <td>픽업완료</td>
+            {% endif %}
+            <td><a class="btn" href="{% url 'delete' post.id %}"> 취소 </a></td>
+        </tr>
+        <!-- </div> -->
+        {% endfor %}
+    </table>
+    <!--페이지네이션-->
+    <div class="pagination" style="text-align: center;">
+        {%if posts.has_previous%}
+        <a class="btn-1" href="?page=1">First</a> &nbsp;
+        <a class="btn-1" href="?page={{posts.previous_page_number}}">Previous</a> &nbsp;
+        {%endif%}
+        <span>{{posts.number}}</span>
+        <span>of</span>
+        <span>{{posts.paginator.num_pages}}</span> &nbsp;
 
-<h1>드라이브 스루 신청결과<h1>
-        <div>
-            <table border="1">
-                <th>지점명</th>
-                <th>상품</th>
-                <th>신청시간</th>
-                <th>픽업시간</th>
-                <th>신청상태</th>
-                <th>삭제</th>
-                {% for post in posts %}
-                <div style="border: 1px solid black;">
-                    <tr>
-                        <td>{{post.shop}}</td>
-                        <td>{{post.items}}</td>
-                        <td>{{post.pick_date}}</td>
-                        <td>{{post.pub_date}}</td>
-                        <!-- 픽업 준비 상황 (신청완료 = 0 (디폴트) / 상품준비중 = 1 / 준비완료, 픽업대기 = 2 / 픽업완료 = 3) -->
-                        {%if post.state == 0%}
-                        <td>신청완료(대기중)</td>
-                        {%elif post.state == 1%}
-                        <td>상품 준비중</td>
-                        {%elif post.state == 2%}
-                        <td>픽업대기</td>
-                        {% else %}
-                        <td>픽업완료</td>
-                        {% endif %}
-                        <td><a class="btn" href="{% url 'delete' post.id %}"> 삭제 </a></td>
-                    </tr>
-                </div>
-                {% endfor %}
-            </table>
-        </div>
+        {%if posts.has_next%}
+        <a class="btn-1" href="?page={{posts.next_page_number}}">Next</a>&nbsp;
+        <a class="btn-1" href="?page={{posts.paginator.num_pages}}">Last</a>
+        {%endif%}
+    </div>
+</div>
 
-        <!--페이지네이션-->
-        <div class="pagination">
-            {%if posts.has_previous%}
-            <a class="btn-1" href="?page=1">First</a> &nbsp;
-            <a class="btn-1" href="?page={{posts.previous_page_number}}">Previous</a> &nbsp;
-            {%endif%}
-            <span>{{posts.number}}</span>
-            <span>of</span>
-            <span>{{posts.paginator.num_pages}}</span> &nbsp;
-
-            {%if posts.has_next%}
-            <a class="btn-1" href="?page={{posts.next_page_number}}">Next</a>&nbsp;
-            <a class="btn-1" href="?page={{posts.paginator.num_pages}}">Last</a>
-            {%endif%}
-        </div>
-        {%endblock%}
+{%endblock%}
