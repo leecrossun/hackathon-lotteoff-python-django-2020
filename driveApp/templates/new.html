@@ -1,18 +1,139 @@
 {%extends 'tem.html'%}
+{% load humanize %}
+{%block head%}
+<style>
+    /* Font */
+    @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap');
 
+    * {
+        margin: 5px;
+        padding: 5px;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .container {
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        border-radius: 1em;
+    }
+
+    .container div {
+        border-radius: 1em;
+        border: 1px solid black;
+
+    }
+
+    /* Table Area */
+    .table {
+        font-size: 20px;
+    }
+
+    .title {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .sub_title {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    table {
+        text-align: center;
+        margin: 30px auto;
+        border-collapse: collapse;
+    }
+
+    tr {
+        border-bottom: 1px solid black;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    /* td>div {
+        height: 90%;
+        width: 100px;
+        border: none;
+    }
+
+    td .btn {
+        font-size: 15px;
+    } */
+
+    /* Button */
+    .btn {
+        border: 1px solid black;
+        margin: 10px;
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        border-radius: 0.5em;
+        font-size: 0.5em;
+        box-shadow: 3px 3px rgb(56, 56, 56);
+        text-transform: uppercase;
+    }
+
+    .btn:hover {
+        background-color: rgb(56, 56, 56);
+        box-shadow: 3px 3px rgb(56, 56, 56);
+        color: rgb(255, 255, 255);
+
+    }
+</style>
+{%endblock%}
 {%block contents%}
 
-<h1>드리이브 스루 신청하기<h1>
-<h2>주문한 상품 목록을 확인하고 픽업시간과 픽업받을 지점을 선택해주세요</h2>
-    {% for cart_item in cart_items %}
-    {{cart_item.product.name}}<br>
-    {% endfor %}
-<form action="{% url 'create' %}" method="post">
-    {%csrf_token%}
-    <p><input type="text" name="shop"></p>
-    <p><input type="time" name="time"></p>
-    <p><input type="date" name="date"></p>
-    <p><input type="submit" value="Submit"></p>
-</form>
+<div class="container">
+    <p class="title">🚗 드리이브 스루 신청하기 🚗</p>
+    <p class="sub_title">주문한 상품 목록을 확인하고 픽업시간과 픽업받을 지점을 선택해주세요</p>
+    <table class="table">
+        <th>상품명</th>
+        <th>지점명</th>
+        <th>가격</th>
+        <th>개수</th>
+        {% for cart_item in cart_items %}
+        <tr>
+            <td>{{cart_item.product.name}}</td>
+            <td>{{cart_item.product.storeName}}</td>
+            <td>{{cart_item.product.price|intcomma}}원</td>
+            <td>{{cart_item.quantity}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <table class="table">
+        <th>총금액</th>
+        <th>지점 선택</th>
+        <th>픽업 날짜</th>
+        <th>픽업 시간</th>
+        <th>신청</th>
+        <tr>
+            <td>
+                {{total|intcomma}} 원
+            </td>
+            <form action="{% url 'create' %}" method="post">
+                {%csrf_token%}
+                <td>
+                    {% for cart_item in cart_items %}
+                    <input type="radio" id="shop" name="shop" value="{{cart_item.product.storeName}}">
+                    <label for="male">{{cart_item.product.storeName}}</label><br>
+                    {% endfor %}
+                </td>
+                <td>
+                    <p><input type="time" name="time"></p>
+                </td>
+                <td>
+                    <p><input type="date" name="date"></p>
+                </td>
+                <td>
+                    <p><input type="submit" value="Submit"></p>
+                </td>
+            </form>
+        </tr>
+    </table>
+
+</div>
 
 {%endblock%}

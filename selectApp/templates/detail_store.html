@@ -10,7 +10,7 @@
 
     .product {
         border: 2px solid #D44848;
-        width:500px;
+        width: 500px;
         border-radius: 10px;
     }
 
@@ -20,7 +20,7 @@
     }
 
     #pro_name {
-        font-size: 28px;
+        font-size: 30px;
         color: black;
     }
 
@@ -32,7 +32,6 @@
     #available {
         color: red;
     }
-
 </style>
 {%endblock%}
 
@@ -42,7 +41,30 @@
 
     <h2><b>롯데마트 {{storeName}}</b></h2>
 
-    <table style="margin-top: 40px;">
+    <table style="margin-top: 10px; margin-bottom: 20px">
+        {% for product in storePost %}
+        <tr style="border-bottom: 2px dashed #E88B8B;">
+            <td style="padding: 40px">
+                <a href="{% url 'detail_product' product.id %}" id="detail_pro">
+                    <img src="{{product.image.url}}" width="300px" height="200px" alt="상품 사진">
+                </a>
+            </td>
+            <td style="padding:0 50px;">
+                <p style="color: gray;"><b id="pro_name">{{product.name}}</b> &nbsp; {{product.category}}</p>
+                <p id="price">가격: {{product.price|intcomma}}원</p>
+
+                {% if product.unavailable %}
+                <p id="available" style="color:red;">품절</p>
+                {% else %}
+                <p id="available" style="color:red;">재고 있음</p>
+                {% endif %}
+            </td>
+        </tr>
+        {%endfor%}
+
+    </table>
+
+    <!-- <table style="margin-top: 40px;">
         <tr>
             <td>
                 {% for product in storePost %}
@@ -52,7 +74,6 @@
                         <img src="{{product.image.url}}" width="170px" height="100px" alt="상품 사진">
                         <p id="price">{{product.price|intcomma}}원</p>
     
-                        <!-- if문으로 품절여부 표시 -->
                         {% if product.unavailable %}
                         <p id="available">품절</p>
                         {% else %}
@@ -61,12 +82,11 @@
     
                     </div>
                 </a>
-
                 <br>
                 {% endfor %}
             </td>
         </tr>
-    </table>
+    </table> -->
 
     {% if storePost.has_previous %}
     <a href="?page=1">First</a>
