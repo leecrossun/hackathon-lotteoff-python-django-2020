@@ -23,6 +23,7 @@
     #available {
         color: red;
         text-align: right;
+        font-family: 'LotteMartDreamL';
     }
 
     #btn {
@@ -30,11 +31,11 @@
         width: 200px;
         height: 40px;
         font-size: 18px;
-        font-weight: bolder;
-        background-color: gray;
+        background-color:  rgb(252, 110, 110); 
         border-radius: 8px;
         color: white;
         border: none;
+        font-family: 'LotteMartDreamL';
     }
 </style>
 {%endblock%}
@@ -46,8 +47,8 @@
         <table>
             <tr>
                 <td colspan="3">
-                    <small style="margin: 0; color: #B8B7B7;">롯데마트 {{store.storeName}}</small>
-                    <p style="color: gray;"><b id="storename">{{store.name}}</b> &nbsp;&nbsp; {{store.category}}</p>
+                    <small style="margin: 0; color: #B8B7B7; font-family: 'LotteMartDreamL';">롯데마트 {{store.storeName}}</small>
+                    <p style="color: gray; font-family: 'LotteMartDreamM';"><b id="storename">{{store.name}}</b> &nbsp;&nbsp; {{store.category}}</p>
                 </td>
             </tr>
             <tr style="border-bottom: 2px dashed #E88B8B;">
@@ -55,7 +56,7 @@
                     <img src="{{store.image.url}}" width="410px" height="300px" alt="상품 사진">
                 </td>
                 <td>
-                    <p id="price">가격: {{store.price|intcomma}}원</p>
+                    <p id="price" style="font-family: 'LotteMartDreamM';">{{store.price|intcomma}}원</p>
     
                     {% if store.unavailable %}
                     <p id="available">품절</p>
@@ -72,8 +73,8 @@
             </tr>
             <tr>
                 <td style="padding-top: 25px;">
-                    <p style="font-size: 28px; font-weight:bolder">상품 상세정보</p>
-                    <p style="font-size: 18px;">{{store.descriptions|linebreaksbr}}</p>
+                    <p style="font-size: 28px; font-weight:bolder; font-family:'LotteMartDreamB';">상품 상세정보</p>
+                    <p style="font-size: 18px; font-family:'LotteMartDreamL';">{{store.descriptions|linebreaksbr}}</p>
                 </td>
             </tr>
     

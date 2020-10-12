@@ -1,14 +1,10 @@
 {%extends 'tem.html'%}
 {%block contents%}
 <style>
-    /* Font */
-    @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap');
 
-    /* * {
-        margin: 5px;
-        padding: 5px;
-        font-family: 'Roboto', sans-serif;
-    } */
+    * {
+        font-family: 'LotteMartDreamL';
+    }
 
     .container {
         margin: 20px auto;
@@ -16,6 +12,8 @@
         flex-direction: column;
         border: 1px solid black;
         border-radius: 1em;
+        box-shadow: 5px 5px red;
+        padding: 40px;
     }
 
     .container div {
@@ -24,19 +22,25 @@
 
     }
 
+    .main {
+        margin: 50px;
+    }
+
     /* Table Area */
     .table {
         font-size: 20px;
+        width: 90%;
     }
 
-    .table>.title {
+    .title {
         font-size: 30px;
         text-align: center;
+        font-family: 'LotteMartDreamM';
     }
 
     table {
         text-align: center;
-        margin: 0px auto;
+        margin: 30px auto;
         border-collapse: collapse;
     }
 
@@ -47,6 +51,11 @@
     th {
         text-align: center;
     }
+
+    td {
+        font-size: 0.8em;
+    }
+
 
     /* td>div {
         height: 90%;
@@ -76,10 +85,6 @@
         color: rgb(255, 255, 255);
 
     }
-
-    .main {
-        margin: 50px;
-    }
 </style>
 <div class="main">
 <div class="container">
@@ -87,7 +92,7 @@
     <table class="table">
         <th width="100px">지점명</th>
         <th width="250px">픽업날짜</th>
-        <th>픽업시간</th>
+        <th width="150px">픽업시간</th>
         <th width="300px">신청시간</th>
         <th width="200px">신청상태</th>
         <th>삭제</th>

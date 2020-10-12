@@ -10,6 +10,7 @@
         width: 120px;
         height: 40px;
         margin-right: 15px;
+        font-family: 'LotteMartDreamL';
     }
 
     option {
@@ -29,6 +30,7 @@
         border-radius: 8px;
         color: white;
         border: none;
+        font-family: 'LotteMartDreamL';
     }
 
     #store {
@@ -159,7 +161,7 @@
 </script>
 
 <div align="center" class="div1">
-    <h1><b>지점 고르기</b></h1>
+    <h1 style="font-family: 'LotteMartDreamM';"><b>지점 고르기</b></h1>
     <br>
 
     <select name="s1" id="s1" onchange="f1()">
@@ -183,7 +185,7 @@
     <br><br><br>
 
     {% if regionPost %}
-    <div class="store_border">
+    <div class="store_border" style="font-family: 'LotteMartDreamL';">
         {% for r in regionPost %}
         <div class="hr">
             <a id="store" href="{% url 'storeFilter' r.storeName %}">{{r.storeName}}</a><br>
