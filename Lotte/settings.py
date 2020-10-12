@@ -14,7 +14,7 @@ SECRET_KEY = 'm%ztko-ray!-^c@!l^d!qg3d$2viel&t*ffc_0+hgm(-adx3!%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://intense-fortress-67657.herokuapp.com']
 
 
 # Application definition
