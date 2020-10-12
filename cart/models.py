@@ -17,6 +17,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     active = models.BooleanField(default=True)
+    drive = models.BooleanField(default=False)
     class Meta:
         db_table = 'CartItem'
 

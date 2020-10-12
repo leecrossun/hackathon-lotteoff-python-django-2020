@@ -18,7 +18,7 @@
 {%block contents%}
 <div align="center">
     {%if category%}
-    <h2><b>{{category.name}}</b></h2>
+    <h2 style="margin-top:50px; font-family: 'LotteMartDreamB';"><b>{{category.name}}</b></h2>
     {%endif%}
     
     <table>
@@ -28,14 +28,14 @@
                 <a href="{{product.get_url}}"><img src="{{product.image.url}}" width="300px" height="200px" alt="상품 사진"></a>
             </td>
             <td style="padding:0 50px;">
-                <b style="color: gray;">{{product.storeName}} &nbsp;<p id="pro_name">{{product.name}}</p></b>
-                <p id="price">가격: {{product.price|intcomma}}원</p>
-                <p>{{product.summary|linebreaksbr}} ...</p>
+                <b style="color: gray; font-family: 'LotteMartDreamM';">{{product.storeName}} &nbsp;<p id="pro_name">{{product.name}}</p></b>
+                <p id="price" style="font-family: 'LotteMartDreamL';">{{product.price|intcomma}}원</p>
+                <p style="font-family: 'LotteMartDreamL';">{{product.summary|linebreaksbr}} ...</p>
 
                 {% if product.unavailable %}
-                <p id="available" style="color:red;">품절</p>
+                <p id="available" style="color:red; font-family: 'LotteMartDreamL';">품절</p>
                 {% else %}
-                <p id="available" style="color:red;">재고 있음</p>
+                <p id="available" style="color:red; font-family: 'LotteMartDreamL';">재고 있음</p>
                 {% endif %}
             </td>
         </tr>
@@ -45,7 +45,7 @@
 </div>
 
 
-<div align="center" style="padding: 20px 0px;">
+<div align="center" style="padding: 20px 0px; font-family: 'LotteMartDreamL';">
     {% if prodPage.has_previous %}
     <a href="?page=1">First</a>
     <a href="?page={{prodPage.previous_page_number}}">Previous</a>

@@ -17,10 +17,7 @@
 
     .new_detail_slogan {
         margin-top: 50px;
-    }
-
-    .delete_btn {
-        color: red;
+        font-family: 'LotteMartDreamM';
     }
 
     .apply_list {
@@ -34,6 +31,12 @@
         border-bottom: #BDBDBD solid 1px;
         margin-top: 40px;
     }
+
+    .btn {
+        background-color:white;
+        color:rgb(250, 169, 169);
+        border: medium solid rgb(252, 110, 110); 
+    }
 </style>
 {%endblock%}
 
@@ -46,27 +49,27 @@
 
             <img class="new_img" src="{{post.image.url}}" alt="신제품" width="300px">
             <br><br>
-            <p>{{post.description|linebreaksbr}}</p>
+            <p style="font-family: 'LotteMartDreamL';">{{post.description|linebreaksbr}}</p>
         </div>
 
     </div>
     <div class="apply_form">
-    <h3><b>시식, 시음 신청</b></h3>
-    <p>*양식에 맞지 않게 작성한 경우 신청이 취소될 수 있습니다.*</p><br>
+    <h3 style="font-family: 'LotteMartDreamM';"><b>시식, 시음 신청</b></h3>
+    <p style="font-family: 'LotteMartDreamL';">*양식에 맞지 않게 작성한 경우 신청이 취소될 수 있습니다.*</p><br>
     {%if user.is_authenticated%}
-    <form method="POST" action="{% url 'createApply' post.id%}">
+    <form method="POST" action="{% url 'createApply' post.id%}" style="font-family: 'LotteMartDreamL';">
         <table>
             {% csrf_token %}
             {{apply_form.as_table}}
 
         </table><br><br>
-        <input type="submit" value="제출">
+        <input class="btn" type="submit" value="제출">
     </form><br><br>
     {%else%}
-    <h4>🔒로그인 후 신청 가능합니다</h4>
+    <h4 style="font-family: 'LotteMartDreamL';">🔒로그인 후 신청 가능합니다</h4>
     {%endif%}
 </div>
-    <div class="apply_list">
+    <div class="apply_list" style="font-family: 'LotteMartDreamL';">
         <h3><b>신청글 조회</b></h3>
         <hr>
         {%for apply in post.apply_set.all %}
@@ -76,7 +79,7 @@
         <p><b>가져갈 시간</b>: {{apply.date_time}}</p>
         <p><b>신청 동기</b>: {{apply.content}}</p>
 
-        <a class="delete_btn" href="{% url 'deleteApply' post.id apply.id %}">삭제</a>
+        <a class="btn" href="{% url 'deleteApply' post.id apply.id %}">삭제</a>
 
         <hr>
         {%else%}
