@@ -8,10 +8,6 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <style>
-    * {
-        font-family: 'LotteMartDreamL';
-    }
-    
     .my_custom_thread {
         font-weight:normal;
         text-transform:uppercase;
@@ -44,24 +40,24 @@
 <body>
 {%if not cart_items%}
     <div>
-        <div class="text-center">
-            <br><h1 class="text-center my_title">장바구니가 비어있습니다.</h1><br>
+        <div class="text-center" style="font-family:'LotteMartDreamL';">
+            <br><h1 class="text-center">장바구니가 비어있습니다.</h1><br>
             <p class="text-center">계속 쇼핑하시려면 <a href="{%url 'shop:allProdCat'%}">여기</a>를 클릭해주세요.</p>
         </div>
     </div>
 {%else%}
     <div>
-        <div class="text_center">
-            <br><h1 class="text-center my_title">장바구니 목록</h1><br>
+        <div class="text_center" style="font-family:'LotteMartDreamB';">
+            <br><h1 class="text-center">장바구니 목록</h1><br>
         </div>
     </div>
     <div class="container">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
             <table class="table my_custom_table">
                 <thread class="my_custom_thread">
-                    <tr><th colspan="5">상품 목록</th></tr>
+                    <tr><th colspan="5" style="font-family:'LotteMartDreamM';">상품 목록</th></tr>
                 </thread>
-                <tbody>
+                <tbody style="font-family:'LotteMartDreamL';">
                     {%for cart_item in cart_items%}
                         <tr>
                             <td>
@@ -74,7 +70,7 @@
                                 {%if cart_item.drive%}
                                     <p>드라이브쓰루 신청됨</p>
                                 {%else%}
-                                    <p>드라이브쓰루 신청X</p>
+                                    <p>드라이브쓰루 신청 대기중</p>
                                 {%endif%}
                             </td>
                             <td>
@@ -99,11 +95,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center" style="font-family:'LotteMartDreamL';">
             <table class="table my_custom_table">
                 <thread class="my_custom_thread">
                     <tr>
-                        <th>드라이브쓰루 신청</th>
+                        <th style="font-family:'LotteMartDreamM';">드라이브쓰루 신청</th>
                     </tr>
                 </thread>
                 <tbody>

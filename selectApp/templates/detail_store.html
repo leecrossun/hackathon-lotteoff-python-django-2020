@@ -27,10 +27,16 @@
     #price {
         margin-top: 15px;
         font-size: 20px;
+        font-family: 'LotteMartDreamL';
     }
 
     #available {
         color: red;
+        font-family: 'LotteMartDreamL';
+    }
+
+    a,span {
+        font-family: 'LotteMartDreamL';
     }
 </style>
 {%endblock%}
@@ -39,7 +45,7 @@
 
 <div align="center" class="div1">
 
-    <h2><b>롯데마트 {{storeName}}</b></h2>
+    <h2 style="font-family: 'LotteMartDreamM';"><b>롯데마트 {{storeName}}</b></h2>
 
     <table style="margin-top: 10px; margin-bottom: 20px">
         {% for product in storePost %}
@@ -50,13 +56,13 @@
                 </a>
             </td>
             <td style="padding:0 50px;">
-                <p style="color: gray;"><b id="pro_name">{{product.name}}</b> &nbsp; {{product.category}}</p>
-                <p id="price">가격: {{product.price|intcomma}}원</p>
+                <p style="color: gray; font-family: 'LotteMartDreamL';"><b id="pro_name">{{product.name}}</b> &nbsp; {{product.category}}</p>
+                <p id="price">{{product.price|intcomma}}원</p>
 
                 {% if product.unavailable %}
-                <p id="available" style="color:red;">품절</p>
+                <p id="available">품절</p>
                 {% else %}
-                <p id="available" style="color:red;">재고 있음</p>
+                <p id="available">재고 있음</p>
                 {% endif %}
             </td>
         </tr>
