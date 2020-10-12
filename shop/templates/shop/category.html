@@ -12,6 +12,12 @@
         margin-top: 15px;
         font-size: 20px;
     }
+
+    .btn {
+        background-color:white;
+        color:rgb(250, 169, 169);
+        border: medium solid rgb(252, 110, 110);
+    }
 </style>
 {%endblock%}
 
@@ -47,8 +53,8 @@
 
 <div align="center" style="padding: 20px 0px; font-family: 'LotteMartDreamL';">
     {% if prodPage.has_previous %}
-    <a href="?page=1">First</a>
-    <a href="?page={{prodPage.previous_page_number}}">Previous</a>
+    <a class="btn" href="?page=1">First</a>
+    <a class="btn" href="?page={{prodPage.previous_page_number}}" style="margin-right:10px;">Previous</a>
     {% endif %}
 
     <span>{{prodPage.number}}</span>
@@ -56,8 +62,8 @@
     <span>{{prodPage.paginator.num_pages}}</span>
 
     {% if prodPage.has_next %}
-    <a href="?page={{prodPage.next_page_number}}">Next</a>
-    <a href="?page={{prodPage.paginator.num_pages}}">Last</a>
+    <a class="btn" href="?page={{prodPage.next_page_number}}" style="margin-left:10px;">Next</a>&nbsp;
+    <a class="btn" href="?page={{prodPage.paginator.num_pages}}">Last</a>
     {% endif %}
 </div>
 
