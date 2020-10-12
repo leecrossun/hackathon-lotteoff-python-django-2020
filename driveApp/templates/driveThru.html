@@ -1,14 +1,14 @@
 {%extends 'tem.html'%}
-{%block head%}
+{%block contents%}
 <style>
     /* Font */
     @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap');
 
-    * {
+    /* * {
         margin: 5px;
         padding: 5px;
         font-family: 'Roboto', sans-serif;
-    }
+    } */
 
     .container {
         margin: 20px auto;
@@ -76,9 +76,12 @@
         color: rgb(255, 255, 255);
 
     }
+
+    .main {
+        margin: 50px;
+    }
 </style>
-{%endblock%}
-{%block contents%}
+<div class="main">
 <div class="container">
     <p class="title" style="font-size: 40px; text-align: center; margin: 10px;">🚗 드라이브 스루 예약 내역 🚕</p>
     <table class="table">
@@ -125,6 +128,7 @@
         <a class="btn-1" href="?page={{posts.paginator.num_pages}}">Last</a>
         {%endif%}
     </div>
+</div>
 </div>
 
 {%endblock%}
