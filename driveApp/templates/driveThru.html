@@ -41,7 +41,7 @@
     table {
         text-align: center;
         margin: 30px auto;
-        border-collapse: collapse;
+        border-collapse: collapse; 
     }
 
     tr {
@@ -50,10 +50,14 @@
 
     th {
         text-align: center;
+        background-color: rgb(53, 53, 53);
+        color: white;
     }
 
     td {
         font-size: 0.8em;
+        text-align: center;
+        vertical-align: middle;
     }
 
 
@@ -68,7 +72,7 @@
     } */
 
     /* Button */
-    .btn {
+    /* .btn {
         border: 1px solid black;
         margin: 10px;
         background-color: rgb(255, 255, 255);
@@ -84,6 +88,11 @@
         box-shadow: 3px 3px rgb(56, 56, 56);
         color: rgb(255, 255, 255);
 
+    } */
+    .btn {
+        background-color:white;
+        color:rgb(250, 169, 169);
+        border: medium solid rgb(252, 110, 110);
     }
 </style>
 <div class="main">
@@ -98,39 +107,39 @@
         <th>삭제</th>
         {% for post in posts %}
         <!-- <div style="border: 1px solid black;"> -->
-        <tr>
-            <td>{{post.shop}}</td>
-            <td>{{post.pick_day}}</td>
-            <td>{{post.pick_date}}</td>
-            <td>{{post.pub_date}}</td>
+        <tr height="70px">
+            <td style="vertical-align: middle;">{{post.shop}}</td>
+            <td style="vertical-align: middle;">{{post.pick_day}}</td>
+            <td style="vertical-align: middle;">{{post.pick_date}}</td>
+            <td style="vertical-align: middle;">{{post.pub_date}}</td>
             <!-- 픽업 준비 상황 (신청완료 = 0 (디폴트) / 상품준비중 = 1 / 준비완료, 픽업대기 = 2 / 픽업완료 = 3) -->
             {%if post.state == 0%}
-            <td>신청완료(대기중)</td>
+            <td style="vertical-align: middle;">신청완료(대기중)</td>
             {%elif post.state == 1%}
-            <td>상품 준비중</td>
+            <td style="vertical-align: middle;">상품 준비중</td>
             {%elif post.state == 2%}
-            <td>픽업대기</td>
+            <td style="vertical-align: middle;">픽업대기</td>
             {% else %}
-            <td>픽업완료</td>
+            <td style="vertical-align: middle;">픽업완료</td>
             {% endif %}
-            <td><a class="btn" href="{% url 'delete' post.id %}"> 취소 </a></td>
+            <td style="vertical-align: middle;"><a class="btn" href="{% url 'delete' post.id %}"> 취소 </a></td>
         </tr>
         <!-- </div> -->
         {% endfor %}
     </table>
     <!--페이지네이션-->
-    <div class="pagination" style="text-align: center;">
+    <div class="pagination" style="text-align: center; padding: 10px;">
         {%if posts.has_previous%}
-        <a class="btn-1" href="?page=1">First</a> &nbsp;
-        <a class="btn-1" href="?page={{posts.previous_page_number}}">Previous</a> &nbsp;
+        <a class="btn" href="?page=1">First</a> &nbsp;
+        <a class="btn" href="?page={{posts.previous_page_number}}">Previous</a> &nbsp;
         {%endif%}
         <span>{{posts.number}}</span>
         <span>of</span>
         <span>{{posts.paginator.num_pages}}</span> &nbsp;
 
         {%if posts.has_next%}
-        <a class="btn-1" href="?page={{posts.next_page_number}}">Next</a>&nbsp;
-        <a class="btn-1" href="?page={{posts.paginator.num_pages}}">Last</a>
+        <a class="btn" href="?page={{posts.next_page_number}}">Next</a>&nbsp;
+        <a class="btn" href="?page={{posts.paginator.num_pages}}">Last</a>
         {%endif%}
     </div>
 </div>

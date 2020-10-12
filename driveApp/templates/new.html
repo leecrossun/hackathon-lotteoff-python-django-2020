@@ -75,7 +75,7 @@
     } */
 
     /* Button */
-    .btn {
+    /* .btn {
         border: 1px solid black;
         margin: 10px;
         background-color: rgb(255, 255, 255);
@@ -91,6 +91,11 @@
         box-shadow: 3px 3px rgb(56, 56, 56);
         color: rgb(255, 255, 255);
 
+    } */
+    .btn {
+        background-color:white;
+        color:rgb(250, 169, 169);
+        border: medium solid rgb(252, 110, 110);
     }
 </style>
 {%endblock%}
@@ -120,24 +125,24 @@
             <th>픽업 시간</th>
             <th>신청</th>
             <tr>
-                <td>
+                <td style="vertical-align: middle;">
                     {{total|intcomma}} 원
                 </td>
                 <form action="{% url 'create' %}" method="post">
                     {%csrf_token%}
-                    <td>
+                    <td style="vertical-align: middle;">
                         {% for cart_item in cart_items %}
                         <input type="radio" id="shop" name="shop" value="{{cart_item.product.storeName}}">
                         <label for="male">{{cart_item.product.storeName}}</label><br>
                         {% endfor %}
                     </td>
-                    <td>
+                    <td style="vertical-align: middle;">
                         <p><input type="date" name="date"></p>
                     </td>
-                    <td>
+                    <td style="vertical-align: middle;">
                         <p><input type="time" name="time"></p>
                     </td>
-                    <td>
+                    <td style="vertical-align: middle;">
                         <p><input class="btn" type="submit" value="신청"></p>
                     </td>
                 </form>
