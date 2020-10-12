@@ -1,1 +1,1 @@
-web: gunicorn LOTTE_OFF.wsgi --log-file -
+web: gunicorn Lotte.wsgi --log-file -
