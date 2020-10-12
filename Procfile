@@ -1,0 +1,1 @@
+web: gunicorn LOTTE_OFF.wsgi --log-file -
