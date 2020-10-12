@@ -125,8 +125,16 @@
             <th>픽업 시간</th>
             <th>신청</th>
             <tr>
+                <form action="{% url 'create' %}" method="post">
+                    {%csrf_token%}
                 <td style="vertical-align: middle;">
                     {{total|intcomma}} 원
+                </td>
+                <td style="vertical-align: middle;">
+                    {% for cart_item in cart_items %}
+                    <input type="radio" id="shop" name="shop" value="{{cart_item.product.storeName}}">
+                    <label for="male">{{cart_item.product.storeName}}</label><br>
+                    {% endfor %}
                 </td>
                 <td>
                     <p><input type="date" name="date"></p>
@@ -137,26 +145,6 @@
                 <td>
                     <p><input class="btn" type="submit" value="신청"></p>
                 </td>
-            </form>
-        </tr>
-    </table>
-                <form action="{% url 'create' %}" method="post">
-                    {%csrf_token%}
-                    <td style="vertical-align: middle;">
-                        {% for cart_item in cart_items %}
-                        <input type="radio" id="shop" name="shop" value="{{cart_item.product.storeName}}">
-                        <label for="male">{{cart_item.product.storeName}}</label><br>
-                        {% endfor %}
-                    </td>
-                    <td style="vertical-align: middle;">
-                        <p><input type="date" name="date"></p>
-                    </td>
-                    <td style="vertical-align: middle;">
-                        <p><input type="time" name="time"></p>
-                    </td>
-                    <td style="vertical-align: middle;">
-                        <p><input class="btn" type="submit" value="신청"></p>
-                    </td>
                 </form>
             </tr>
         </table>
