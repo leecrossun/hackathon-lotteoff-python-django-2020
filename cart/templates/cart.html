@@ -30,6 +30,7 @@
         background-color:white;
         border : medium solid rgb(252, 110, 110); 
         color : rgb(250, 169, 169);
+        font-size: 15px;
         width: 400px;
     }
 </style>
@@ -55,7 +56,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
             <table class="table my_custom_table">
                 <thread class="my_custom_thread">
-                    <tr><th colspan="5" style="font-family:'LotteMartDreamM';">상품 목록</th></tr>
+                    <tr><th colspan="5" style="font-family:'LotteMartDreamM'; font-size:15px;">상품 목록</th></tr>
                 </thread>
                 <tbody style="font-family:'LotteMartDreamL';">
                     {%for cart_item in cart_items%}
@@ -68,9 +69,9 @@
                                 개당 가격 : {{cart_item.product.price|intcomma}}원<br>
                                 총금액 : {{cart_item.quantity}} x {{cart_item.product.price|intcomma}}원<br><br>
                                 {%if cart_item.drive%}
-                                    <p>드라이브쓰루 신청됨</p>
+                                    <p style="color:gray;">드라이브쓰루 신청됨</p>
                                 {%else%}
-                                    <p>드라이브쓰루 신청 대기중</p>
+                                    <p style="color:gray;">드라이브쓰루 신청 대기중</p>
                                 {%endif%}
                             </td>
                             <td>
@@ -99,16 +100,16 @@
             <table class="table my_custom_table">
                 <thread class="my_custom_thread">
                     <tr>
-                        <th style="font-family:'LotteMartDreamM';">드라이브쓰루 신청</th>
+                        <th style="font-family:'LotteMartDreamM'; font-size:15px;">드라이브쓰루 신청</th>
                     </tr>
                 </thread>
                 <tbody>
                     <tr>
-                        <td style="padding:30px 0;">드라이브쓰루는 현장 결제 시스템입니다.<br>주문한 상품을 수령하기 전 현장 결제를 진행해주시기 바랍니다.</td>
+                        <td style="padding:30px 0; font-size:15px;">드라이브쓰루는 현장 결제 시스템입니다.<br>주문한 상품을 수령하기 전 현장 결제를 진행해주시기 바랍니다.</td>
                     </tr>
                     <tr>
                         <td class="text-left">
-                            총금액 : <strong>{{total|intcomma}}원</strong>
+                            총금액 : <strong style="font-size:18px;">{{total|intcomma}}원</strong>
                         </td>
                     </tr>
                 </tbody>
