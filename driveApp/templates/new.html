@@ -2,21 +2,18 @@
 {% load humanize %}
 {%block head%}
 <style>
-    /* Font */
-    @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap');
-
-    /* * {
-        margin: 5px;
-        padding: 5px;
-        font-family: 'Roboto', sans-serif;
-    } */
+    * {
+        font-family: 'LotteMartDreamL';
+    }
 
     .container {
         margin: 20px auto;
         display: flex;
         flex-direction: column;
-        border: 1px solid black;
+        border: 1px solid rgb(0, 0, 0);
         border-radius: 1em;
+        box-shadow: 5px 5px red;
+        padding: 40px;
     }
 
     .container div {
@@ -25,14 +22,21 @@
 
     }
 
+    .main {
+        margin: 50px;
+    }
+
     /* Table Area */
     .table {
         font-size: 20px;
+        width: 90%;
     }
 
     .title {
-        font-size: 30px;
+        font-size: 40px;
+        margin: 20px;
         text-align: center;
+        font-family: 'LotteMartDreamM';
     }
 
     .sub_title {
@@ -52,6 +56,12 @@
 
     th {
         text-align: center;
+        background-color: rgb(53, 53, 53);
+        color: white;
+    }
+
+    td {
+        font-size: 0.8em;
     }
 
     /* td>div {
@@ -85,55 +95,56 @@
 </style>
 {%endblock%}
 {%block contents%}
-
-<div class="container">
-    <p class="title">🚗 드라이브 스루 신청하기 🚗</p>
-    <p class="sub_title">주문한 상품 목록을 확인하고 픽업시간과 픽업받을 지점을 선택해주세요</p>
-    <table class="table">
-        <th>상품명</th>
-        <th>지점명</th>
-        <th>가격</th>
-        <th>개수</th>
-        {% for cart_item in cart_items %}
-        <tr>
-            <td>{{cart_item.product.name}}</td>
-            <td>{{cart_item.product.storeName}}</td>
-            <td>{{cart_item.product.price|intcomma}}원</td>
-            <td>{{cart_item.quantity}}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <table class="table">
-        <th>총금액</th>
-        <th>지점 선택</th>
-        <th>픽업 날짜</th>
-        <th>픽업 시간</th>
-        <th>신청</th>
-        <tr>
-            <td>
-                {{total|intcomma}} 원
-            </td>
-            <form action="{% url 'create' %}" method="post">
-                {%csrf_token%}
+<div class="main">
+    <div class="container">
+        <p class="title">🚗 드라이브 스루 신청하기 🚗</p>
+        <p class="sub_title">주문한 상품 목록을 확인하고 픽업시간과 픽업받을 지점을 선택해주세요</p>
+        <table class="table">
+            <th>상품명</th>
+            <th>지점명</th>
+            <th>가격</th>
+            <th>개수</th>
+            {% for cart_item in cart_items %}
+            <tr>
+                <td>{{cart_item.product.name}}</td>
+                <td>{{cart_item.product.storeName}}</td>
+                <td>{{cart_item.product.price|intcomma}}원</td>
+                <td>{{cart_item.quantity}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <table class="table">
+            <th>총금액</th>
+            <th>지점 선택</th>
+            <th>픽업 날짜</th>
+            <th>픽업 시간</th>
+            <th>신청</th>
+            <tr>
                 <td>
-                    {% for cart_item in cart_items %}
-                    <input type="radio" id="shop" name="shop" value="{{cart_item.product.storeName}}">
-                    <label for="male">{{cart_item.product.storeName}}</label><br>
-                    {% endfor %}
+                    {{total|intcomma}} 원
                 </td>
-                <td>
-                    <p><input type="time" name="time"></p>
-                </td>
-                <td>
-                    <p><input type="date" name="date"></p>
-                </td>
-                <td>
-                    <p><input class="btn" type="submit" value="신청"></p>
-                </td>
-            </form>
-        </tr>
-    </table>
-
+                <form action="{% url 'create' %}" method="post">
+                    {%csrf_token%}
+                    <td>
+                        {% for cart_item in cart_items %}
+                        <input type="radio" id="shop" name="shop" value="{{cart_item.product.storeName}}">
+                        <label for="male">{{cart_item.product.storeName}}</label><br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <p><input type="date" name="date"></p>
+                    </td>
+                    <td>
+                        <p><input type="time" name="time"></p>
+                    </td>
+                    <td>
+                        <p><input class="btn" type="submit" value="신청"></p>
+                    </td>
+                </form>
+            </tr>
+        </table>
+    </div>
 </div>
+
 
 {%endblock%}
