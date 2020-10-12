@@ -8,11 +8,10 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <style>
-    .my_customer_table {
-        min-width:400px;
-        font-size:14px;
+    * {
+        font-family: 'LotteMartDreamL';
     }
-
+    
     .my_custom_thread {
         font-weight:normal;
         text-transform:uppercase;
@@ -21,12 +20,8 @@
     }
 
     .custom_image {
-        width:100px;
+        width:130px;
         height:100px;
-    }
-
-    .custom_a {
-        text-decoration:none;
     }
 
     .custom_icon {
@@ -36,9 +31,11 @@
 
     .my_custom_button {
         margin-top: 5px;
+        background-color:white;
+        border : medium solid rgb(252, 110, 110); 
+        color : rgb(250, 169, 169);
+        width: 400px;
     }
-
-
 </style>
 
 </head>
@@ -55,14 +52,14 @@
 {%else%}
     <div>
         <div class="text_center">
-            <br><h1 class="text-center my_title">장바구니입니다.</h1><br>
+            <br><h1 class="text-center my_title">장바구니 목록</h1><br>
         </div>
     </div>
-    <div class="row mx-auto">
+    <div class="container">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
             <table class="table my_custom_table">
                 <thread class="my_custom_thread">
-                    <tr><th colspan="5">장바구니 목록</th></tr>
+                    <tr><th colspan="5">상품 목록</th></tr>
                 </thread>
                 <tbody>
                     {%for cart_item in cart_items%}
@@ -73,7 +70,12 @@
                             <td class="text-left">
                                 <p style="font-weight:bold;">{{cart_item.product.name}}</p>
                                 개당 가격 : {{cart_item.product.price|intcomma}}원<br>
-                                총금액 : {{cart_item.quantity}} x {{cart_item.product.price|intcomma}}원
+                                총금액 : {{cart_item.quantity}} x {{cart_item.product.price|intcomma}}원<br><br>
+                                {%if cart_item.drive%}
+                                    <p>드라이브쓰루 신청됨</p>
+                                {%else%}
+                                    <p>드라이브쓰루 신청X</p>
+                                {%endif%}
                             </td>
                             <td>
                                 {{cart_item.sub_total|intcomma}}원
@@ -106,7 +108,7 @@
                 </thread>
                 <tbody>
                     <tr>
-                        <td>드라이브쓰루는 현장 결제 시스템입니다.<br>주문한 상품을 수령하기 전 현장 결제를 진행해주시기 바랍니다.</td>
+                        <td style="padding:30px 0;">드라이브쓰루는 현장 결제 시스템입니다.<br>주문한 상품을 수령하기 전 현장 결제를 진행해주시기 바랍니다.</td>
                     </tr>
                     <tr>
                         <td class="text-left">
@@ -116,9 +118,8 @@
                 </tbody>
             </table>
             <div class="mx-auto">
-                <a href="{%url 'shop:allProdCat'%}" class="btn btn-secondary btn-block my_custom_button">쇼핑 계속하기</a>
-                <a href="{% url 'new' %}" class="btn btn-secondary btn-block my_custom_button">드라이브 스루 신청하기</a></a>
-            </div>
+                <button type="button" class="btn btn-outline-danger my_custom_button" onclick="location.href='/select/'">쇼핑 계속하기</button>
+                <button type="button" class="btn btn-outline-danger my_custom_button" onclick="location.href='/new/'">드라이브스루 신청하기</button>
         </div>
     </div>
     <br>

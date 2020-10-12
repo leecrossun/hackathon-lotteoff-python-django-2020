@@ -30,11 +30,11 @@
         width: 200px;
         height: 40px;
         font-size: 18px;
-        font-weight: bolder;
-        background-color: gray;
+        background-color:  rgb(252, 110, 110); 
         border-radius: 8px;
         color: white;
         border: none;
+        font-family: 'LotteMartDreamL';
     }
 </style>
 {%endblock%}
@@ -46,9 +46,9 @@
         <table>
             <tr>
                 <td colspan="3">
-                    <p><a href="{%url 'shop:allProdCat'%}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a> | {{product.name}}</p>
-                    <small style="margin: 0; color: #B8B7B7;">롯데마트 {{product.storeName}}</small>
-                    <p style="color: gray;"><b id="storename">{{product.name}}</b> &nbsp;&nbsp; {{product.category}}</p>
+                    <p style="font-family: 'LotteMartDreamL';"><a href="{%url 'shop:allProdCat'%}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a> | {{product.name}}</p>
+                    <small style="margin: 0; color: #B8B7B7; font-family: 'LotteMartDreamL';">롯데마트 {{product.storeName}}</small>
+                    <p style="color: gray; font-family: 'LotteMartDreamM';"><b id="storename"">{{product.name}}</b> &nbsp;&nbsp; {{product.category}}</p>
                 </td>
             </tr>
             <tr style="border-bottom: 2px dashed #E88B8B;">
@@ -56,12 +56,12 @@
                     <img src="{{product.image.url}}" width="410px" height="300px" alt="상품 사진">
                 </td>
                 <td>
-                    <p id="price">가격: {{product.price|intcomma}}원</p>
+                    <p id="price"  style="font-family: 'LotteMartDreamM';">{{product.price|intcomma}}원</p>
     
                     {% if product.unavailable %}
-                    <p id="available">품절</p>
+                    <p id="available" style="font-family: 'LotteMartDreamL';">품절</p>
                     {% else %}
-                    <p id="available">재고 있음</p>
+                    <p id="available" style="font-family: 'LotteMartDreamL';">재고 있음</p>
 
                     <a href="{%url 'cart:add_cart' product.id%}">
                         <button id="btn">장바구니 담기</button>
@@ -73,8 +73,8 @@
             </tr>
             <tr>
                 <td style="padding-top: 25px;">
-                    <p style="font-size: 28px; font-weight:bolder">상품 상세정보</p>
-                    <p style="font-size: 18px;">{{product.descriptions|linebreaksbr}}</p>
+                    <p style="font-size: 28px; font-family:'LotteMartDreamB';">상품 상세정보</p>
+                    <p style="font-size: 18px; font-family: 'LotteMartDreamL';">{{product.descriptions|linebreaksbr}}</p>
                 </td>
             </tr>
     

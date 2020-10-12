@@ -61,3 +61,17 @@ def full_remove(request, product_id):
     cart_item = CartItem.objects.get(product=product, cart=cart)
     cart_item.delete()
     return redirect('cart:cart_detail')
+
+
+#################################
+from driveApp.models import DriveThru
+
+def driveThru_apply(request, product_id):
+    drive = get_object_or_404(DriveThru, pk=product_id)
+    cart = Cart.objects.get(cart_id = _cart_id(request))
+    product = get_object_or_404(Product, id=product_id)
+    cart_item = CartItem.objects.filter(cart=cart, active=True)
+
+    if drive.state in (0,1,2):
+        cart_item.drive = True
+    return redirect('cart:cart_detail')
