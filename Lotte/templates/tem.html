@@ -131,6 +131,18 @@
         a {
             font-family: 'LotteMartDreamL';
         }
+
+        .all-contents { min-height: 500px; }
+
+        footer {
+            height: 150px;
+            padding: 30px;
+            text-align: center;
+            /* border-top: red solid 2px; */
+            background-color: #F3F3F3;
+            margin-top: 20px;
+            
+        }
     </style>
 </head>
 
@@ -180,7 +192,7 @@
         </div>
     </nav>
 <hr style="border: 3px solid red; background-color: red;">
-
+<div class="all-contents">
     {%block contents%}
     {%endblock%}
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js">
@@ -189,6 +201,11 @@
             $("p").toggle();
         });
     </script>
+    </div>
+    <footer>
+        <h3><b>LOTTE OFF</b></h3>
+        <p class="copyright">Copyright 2020. 권민채, 김세정, 이시온, 이지우, 이효선 all rights reserved.</p>
+    </footer>
 </body>
 
 </html>
